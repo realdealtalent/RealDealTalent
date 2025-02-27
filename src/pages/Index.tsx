@@ -57,8 +57,6 @@ const Index = () => {
         {/* Testimonials Section positioned at the bottom of the hero */}
         <div className="w-full relative z-10 pb-8">
           <TestimonialsSection
-            title="Trusted by Industry Leaders"
-            description="Hear from the companies and candidates who've experienced our commitment to excellence"
             testimonials={testimonials}
             className="bg-transparent"
           />
