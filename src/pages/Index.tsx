@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
+      <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
         <motion.div 
           className="container relative z-10 mx-auto px-4 flex-1 flex items-center pt-24 md:pt-32"
           initial="hidden"
@@ -55,13 +55,13 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <WordPullUp
               words="Real Deal Talent"
-              className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600 text-4xl sm:text-5xl md:text-6xl font-bold"
               wrapperFramerProps={{
                 hidden: { opacity: 0 },
                 show: {
                   opacity: 1,
                   transition: {
-                    delay: 1, // Delay after globe
+                    delay: 1,
                     staggerChildren: 0.2,
                   },
                 },
@@ -71,35 +71,35 @@ const Index = () => {
               className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2, duration: 0.5 }} // Delay after heading
+              transition={{ delay: 2, duration: 0.5 }}
             >
               We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2.5, duration: 0.5 }} // Delay after subtext
+              transition={{ delay: 2.5, duration: 0.5 }}
             >
-              <Button size="lg">Let's Talk</Button>
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">Let's Talk</Button>
             </motion.div>
           </div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
+          animate={{ opacity: 0.3 }}
           transition={{ duration: 1 }}
         >
-          <Globe className="opacity-50" />
+          <Globe className="opacity-30" />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
         
         {/* Testimonials Section positioned at the bottom of the hero */}
         <motion.div 
           className="w-full relative z-10 mt-16 pb-8"
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 3, duration: 0.8 }} // Delay after CTA
+          transition={{ delay: 3, duration: 0.8 }}
         >
           <TestimonialsSection
             testimonials={testimonials}
@@ -109,16 +109,16 @@ const Index = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-24 bg-muted/30">
+      <section className="py-24 bg-secondary/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-md mx-auto bg-background rounded-lg shadow-lg p-8">
+          <div className="max-w-md mx-auto bg-background/50 backdrop-blur-lg rounded-lg shadow-lg p-8 border border-white/10">
             <h2 className="text-2xl font-bold mb-6 text-center">Let's Connect</h2>
             <form className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-2">Name</label>
                 <input
                   type="text"
-                  className="w-full px-4 py-2 rounded-md border bg-background"
+                  className="w-full px-4 py-2 rounded-md border bg-secondary/50 backdrop-blur-sm"
                   placeholder="Your name"
                 />
               </div>
@@ -126,25 +126,25 @@ const Index = () => {
                 <label className="block text-sm font-medium mb-2">Email</label>
                 <input
                   type="email"
-                  className="w-full px-4 py-2 rounded-md border bg-background"
+                  className="w-full px-4 py-2 rounded-md border bg-secondary/50 backdrop-blur-sm"
                   placeholder="you@company.com"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Message</label>
                 <textarea
-                  className="w-full px-4 py-2 rounded-md border bg-background h-32"
+                  className="w-full px-4 py-2 rounded-md border bg-secondary/50 backdrop-blur-sm h-32"
                   placeholder="Tell us about your needs"
                 />
               </div>
-              <Button className="w-full">Send Message</Button>
+              <Button className="w-full bg-blue-600 hover:bg-blue-700">Send Message</Button>
             </form>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-background border-t">
+      <footer className="bg-background/50 backdrop-blur-lg border-t border-white/10">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
@@ -154,7 +154,7 @@ const Index = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
