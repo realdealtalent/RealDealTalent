@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Globe } from "@/components/ui/globe";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
@@ -35,8 +36,8 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80">
-        <div className="container relative z-10 mx-auto px-4">
+      <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
+        <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center">
           <div className="max-w-4xl mx-auto text-center">
             <WordPullUp
               words="Real Deal Talent"
@@ -52,12 +53,17 @@ const Index = () => {
         </div>
         <Globe className="opacity-50" />
         <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+        
+        {/* Testimonials Section positioned at the bottom of the hero */}
+        <div className="w-full relative z-10 pb-8">
+          <TestimonialsSection
+            title="Trusted by Industry Leaders"
+            description="Hear from the companies and candidates who've experienced our commitment to excellence"
+            testimonials={testimonials}
+            className="bg-transparent"
+          />
+        </div>
       </section>
-
-      {/* Testimonials Section */}
-      <TestimonialsSection
-        testimonials={testimonials}
-      />
 
       {/* Contact Form Section */}
       <section className="py-24 bg-muted/30">
