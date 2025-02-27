@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Globe } from "@/components/ui/globe";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
@@ -36,7 +35,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80">
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <WordPullUp
@@ -46,9 +45,8 @@ const Index = () => {
             <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
             </p>
-            <div className="flex gap-4 justify-center">
-              <Button size="lg">Schedule a Call</Button>
-              <Button size="lg" variant="outline">Learn More</Button>
+            <div className="flex justify-center">
+              <Button size="lg">Let's Talk</Button>
             </div>
           </div>
         </div>
@@ -58,8 +56,6 @@ const Index = () => {
 
       {/* Testimonials Section */}
       <TestimonialsSection
-        title="Trusted by Industry Leaders"
-        description="Hear from the companies and candidates who've experienced our commitment to excellence"
         testimonials={testimonials}
       />
 
