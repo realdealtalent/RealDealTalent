@@ -37,7 +37,7 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
-        <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center">
+        <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center pt-24 md:pt-32">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <WordPullUp
               words="Real Deal Talent"
