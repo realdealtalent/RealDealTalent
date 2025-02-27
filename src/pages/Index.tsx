@@ -4,6 +4,7 @@ import { Globe } from "@/components/ui/globe";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { Button } from "@/components/ui/button";
 import { WordPullUp } from "@/components/ui/word-pull-up";
+import { motion } from "framer-motion";
 
 const testimonials = [
   {
@@ -37,30 +38,74 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
-        <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center pt-24 md:pt-32">
+        <motion.div 
+          className="container relative z-10 mx-auto px-4 flex-1 flex items-center pt-24 md:pt-32"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.5,
+              },
+            },
+          }}
+        >
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <WordPullUp
               words="Real Deal Talent"
               className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
+              wrapperFramerProps={{
+                hidden: { opacity: 0 },
+                show: {
+                  opacity: 1,
+                  transition: {
+                    delay: 1, // Delay after globe
+                    staggerChildren: 0.2,
+                  },
+                },
+              }}
             />
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <motion.p 
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2, duration: 0.5 }} // Delay after heading
+            >
               We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
-            </p>
-            <div>
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.5, duration: 0.5 }} // Delay after subtext
+            >
               <Button size="lg">Let's Talk</Button>
-            </div>
+            </motion.div>
           </div>
-        </div>
-        <Globe className="opacity-50" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.5 }}
+          transition={{ duration: 1 }}
+        >
+          <Globe className="opacity-50" />
+        </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
         
         {/* Testimonials Section positioned at the bottom of the hero */}
-        <div className="w-full relative z-10 mt-16 pb-8">
+        <motion.div 
+          className="w-full relative z-10 mt-16 pb-8"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 3, duration: 0.8 }} // Delay after CTA
+        >
           <TestimonialsSection
             testimonials={testimonials}
             className="bg-transparent"
           />
-        </div>
+        </motion.div>
       </section>
 
       {/* Contact Form Section */}
