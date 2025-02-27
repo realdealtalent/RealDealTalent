@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Globe } from "@/components/ui/globe";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
@@ -33,27 +34,25 @@ const testimonials = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-[#1a1f2e]">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-[#1a1f2e] to-[#1a1f2e]/80">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center justify-center">
-            <div className="max-w-4xl mx-auto text-center">
-              <WordPullUp
-                words="Real Deal Talent"
-                className="mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400 text-4xl sm:text-5xl md:text-6xl"
-              />
-              <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-                We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
-              </p>
-              <div className="flex justify-center">
-                <Button size="lg">Let's Talk</Button>
-              </div>
+      <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
+        <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center">
+          <div className="max-w-4xl mx-auto text-center">
+            <WordPullUp
+              words="Real Deal Talent"
+              className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
+            />
+            <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
+            </p>
+            <div className="flex justify-center">
+              <Button size="lg">Let's Talk</Button>
             </div>
           </div>
         </div>
         <Globe className="opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a1f2e] to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
         
         {/* Testimonials Section positioned at the bottom of the hero */}
         <div className="w-full relative z-10 pb-8">
@@ -65,7 +64,7 @@ const Index = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-24 bg-[#1a1f2e]/30">
+      <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-md mx-auto bg-background rounded-lg shadow-lg p-8">
             <h2 className="text-2xl font-bold mb-6 text-center">Let's Connect</h2>
@@ -100,7 +99,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1a1f2e] border-t border-gray-800">
+      <footer className="bg-background border-t">
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
