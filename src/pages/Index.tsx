@@ -3,6 +3,7 @@ import React from "react";
 import { Globe } from "@/components/ui/globe";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { Button } from "@/components/ui/button";
+import { WordPullUp } from "@/components/ui/word-pull-up";
 
 const testimonials = [
   {
@@ -38,9 +39,10 @@ const Index = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/80">
         <div className="container relative z-10 mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
-              Connecting Exceptional Talent with Visionary Companies
-            </h1>
+            <WordPullUp
+              words="Real Deal Talent"
+              className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
+            />
             <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
             </p>
