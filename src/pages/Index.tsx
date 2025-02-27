@@ -38,15 +38,15 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background to-background/80">
         <div className="container relative z-10 mx-auto px-4 flex-1 flex items-center">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
             <WordPullUp
               words="Real Deal Talent"
-              className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 text-4xl sm:text-5xl md:text-6xl"
             />
-            <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
               We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
             </p>
-            <div className="flex justify-center">
+            <div>
               <Button size="lg">Let's Talk</Button>
             </div>
           </div>
@@ -55,7 +55,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
         
         {/* Testimonials Section positioned at the bottom of the hero */}
-        <div className="w-full relative z-10 pb-8">
+        <div className="w-full relative z-10 mt-16 pb-8">
           <TestimonialsSection
             testimonials={testimonials}
             className="bg-transparent"
