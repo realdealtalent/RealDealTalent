@@ -13,7 +13,7 @@ const testimonials = [
       handle: "VP of Engineering",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face"
     },
-    text: "The talent pipeline they've built for us is exceptional. We've found amazing engineers who align perfectly with our culture."
+    text: "The talent pipeline Imran has built for us is exceptional. He's found amazing engineers who align perfectly with our culture."
   },
   {
     author: {
@@ -21,7 +21,7 @@ const testimonials = [
       handle: "Tech Lead",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
     },
-    text: "Their understanding of the tech landscape helped us fill critical roles in record time. Truly outstanding service."
+    text: "His understanding of the tech landscape helped us fill critical roles in record time. Truly outstanding service."
   },
   {
     author: {
@@ -29,7 +29,7 @@ const testimonials = [
       handle: "CTO",
       avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
     },
-    text: "They don't just match skills, they understand company culture and vision. Every placement has been a perfect fit."
+    text: "Imran doesn't just match skills, he understands company culture and vision. Every placement has been a perfect fit."
   }
 ];
 
