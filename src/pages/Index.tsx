@@ -5,31 +5,38 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { Button } from "@/components/ui/button";
 import { WordPullUp } from "@/components/ui/word-pull-up";
 import { motion } from "framer-motion";
+import { Award, Zap, LightBulb, Users, Target, Clock, Sparkles, BadgeCheck } from "lucide-react";
 
 const testimonials = [
   {
-    author: {
-      name: "Sarah Johnson",
-      handle: "VP of Engineering",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face"
-    },
-    text: "The talent pipeline Imran has built for us is exceptional. He's found amazing engineers who align perfectly with our culture."
+    title: "Industry Expertise",
+    icon: Award,
+    description: "Imran brings deep industry knowledge and connections built over years in the tech recruiting space.",
+    outcome: "The perfect match, every time"
   },
   {
-    author: {
-      name: "Michael Chen",
-      handle: "Tech Lead",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face"
-    },
-    text: "His understanding of the tech landscape helped us fill critical roles in record time. Truly outstanding service."
+    title: "Speed to Hire",
+    icon: Zap,
+    description: "His efficient process means you'll meet qualified candidates within days, not weeks or months.",
+    outcome: "Fill roles 3x faster"
   },
   {
-    author: {
-      name: "Elena Rodriguez",
-      handle: "CTO",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face"
-    },
-    text: "Imran doesn't just match skills, he understands company culture and vision. Every placement has been a perfect fit."
+    title: "Quality Talent",
+    icon: BadgeCheck,
+    description: "Every candidate is thoroughly vetted for technical skill, culture fit, and long-term potential.",
+    outcome: "Top 5% of technical talent"
+  },
+  {
+    title: "Culture First",
+    icon: Users,
+    description: "Imran takes time to understand your company's unique culture and values before suggesting candidates.",
+    outcome: "Perfect culture alignment"
+  },
+  {
+    title: "Targeted Search",
+    icon: Target,
+    description: "Instead of generic job boards, he leverages his network to find the exact skills you need.",
+    outcome: "Precision recruiting"
   }
 ];
 
