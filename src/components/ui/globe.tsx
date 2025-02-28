@@ -76,8 +76,16 @@ export function Globe({
     window.addEventListener("resize", onResize)
     onResize()
 
-    const globe = createGlobe(canvasRef.current!, {
+    // Create a modified config with whiter colors
+    const whiterGlobeConfig = {
       ...config,
+      baseColor: [1, 1, 1], // Pure white
+      markerColor: [66/255, 153/255, 225/255], // Light blue for markers
+      glowColor: [1, 1, 1], // White glow
+    }
+
+    const globe = createGlobe(canvasRef.current!, {
+      ...whiterGlobeConfig,
       width: width * 2,
       height: width * 2,
       onRender,

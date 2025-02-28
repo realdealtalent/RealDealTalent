@@ -5,7 +5,7 @@ import { TestimonialsSection } from "@/components/sections/testimonials-section"
 import { Button } from "@/components/ui/button";
 import { WordPullUp } from "@/components/ui/word-pull-up";
 import { motion } from "framer-motion";
-import { Award, Zap, LightBulb, Users, Target, Clock, Sparkles, BadgeCheck } from "lucide-react";
+import { Award, Zap, Lightbulb, Users, Target, Clock, Sparkles, BadgeCheck } from "lucide-react";
 
 const testimonials = [
   {
@@ -43,6 +43,20 @@ const testimonials = [
 const Index = () => {
   return (
     <div className="min-h-screen">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center">
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+              Real Deal Talent
+            </span>
+          </div>
+          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+            Find Top Talent
+          </Button>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex flex-col items-center justify-between overflow-hidden bg-gradient-to-b from-background via-background/95 to-background/90">
         <motion.div 
