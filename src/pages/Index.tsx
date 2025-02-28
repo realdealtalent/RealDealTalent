@@ -47,9 +47,11 @@ const Index = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-white/10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center">
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
-              Real Deal Talent
-            </span>
+            <img 
+              src="/lovable-uploads/1c60022f-b926-4ac8-a2ec-bff3c02c7d73.png" 
+              alt="Real Deal Talent Logo" 
+              className="h-10"
+            />
           </div>
           <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
             Find Top Talent
@@ -172,7 +174,7 @@ const Index = () => {
               © 2024 Global Talent Hunters. All rights reserved.
             </p>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/realdealtalent/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"

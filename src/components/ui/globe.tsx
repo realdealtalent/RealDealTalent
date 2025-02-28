@@ -79,9 +79,9 @@ export function Globe({
     // Create a modified config with whiter colors
     const whiterGlobeConfig = {
       ...config,
-      baseColor: [1, 1, 1], // Pure white
-      markerColor: [66/255, 153/255, 225/255], // Light blue for markers
-      glowColor: [1, 1, 1], // White glow
+      baseColor: [1, 1, 1] as [number, number, number], // Pure white
+      markerColor: [66/255, 153/255, 225/255] as [number, number, number], // Light blue for markers
+      glowColor: [1, 1, 1] as [number, number, number], // White glow
     }
 
     const globe = createGlobe(canvasRef.current!, {
