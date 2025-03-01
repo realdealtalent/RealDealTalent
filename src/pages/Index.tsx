@@ -96,7 +96,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2, duration: 0.5 }}
             >
-              We specialize in placing top-tier technical talent in roles where they'll thrive and make a lasting impact.
+              We specialize in placing top-tier talent in roles where they'll thrive and make a lasting impact.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
