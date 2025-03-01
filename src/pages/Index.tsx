@@ -171,7 +171,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2024 Global Talent Hunters. All rights reserved.
+              Real Deal Talent LLC
             </p>
             <a
               href="https://www.linkedin.com/company/realdealtalent/"
