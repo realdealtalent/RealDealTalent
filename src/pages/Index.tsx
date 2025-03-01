@@ -11,32 +11,32 @@ const testimonials = [
   {
     title: "Industry Expertise",
     icon: Award,
-    description: "Imran brings deep industry knowledge and connections built over years in the tech recruiting space.",
+    description: "We bring deep industry knowledge and connections built over years in the recruitment space.",
     outcome: "The perfect match, every time"
   },
   {
     title: "Speed to Hire",
     icon: Zap,
-    description: "His efficient process means you'll meet qualified candidates within days, not weeks or months.",
-    outcome: "Fill roles 3x faster"
+    description: "Our efficient process means you'll meet the right qualified candidates without having to wait months.",
+    outcome: "Fill roles faster"
   },
   {
     title: "Quality Talent",
     icon: BadgeCheck,
     description: "Every candidate is thoroughly vetted for technical skill, culture fit, and long-term potential.",
-    outcome: "Top 5% of technical talent"
+    outcome: "Top-tier talent"
   },
   {
     title: "Culture First",
     icon: Users,
-    description: "Imran takes time to understand your company's unique culture and values before suggesting candidates.",
+    description: "We take time to understand your company's unique culture and values before suggesting candidates.",
     outcome: "Perfect culture alignment"
   },
   {
     title: "Targeted Search",
     icon: Target,
-    description: "Instead of generic job boards, he leverages his network to find the exact skills you need.",
-    outcome: "Precision recruiting"
+    description: "Instead of generic job boards, we leverage our network and proactively recruit to find the right talent.",
+    outcome: "Precise recruitment"
   }
 ];
 
