@@ -1,3 +1,7 @@
+## Commit conventions
+
+When committing work for a tracked issue, include `Closes #<N>` on its own line in the commit body. This links the commit to the issue and triggers the post-push hook to close it and clean up triage labels automatically. See `docs/agents/issue-tracker.md`.
+
 ## Agent skills
 
 ### Issue tracker
