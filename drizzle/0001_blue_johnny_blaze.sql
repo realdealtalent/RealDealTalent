@@ -1,4 +1,4 @@
-CREATE TABLE "lost_reasons" (
+CREATE TABLE IF NOT EXISTS "lost_reasons" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"label" text NOT NULL,
 	"slug" text NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE "lost_reasons" (
 	CONSTRAINT "lost_reasons_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
-CREATE TABLE "stage_history" (
+CREATE TABLE IF NOT EXISTS "stage_history" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"entity_type" text DEFAULT 'company' NOT NULL,
 	"entity_id" uuid NOT NULL,

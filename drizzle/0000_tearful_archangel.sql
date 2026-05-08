@@ -1,4 +1,4 @@
-CREATE TABLE "companies" (
+CREATE TABLE IF NOT EXISTS "companies" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"domain" text NOT NULL,
@@ -23,4 +23,4 @@ CREATE TABLE "companies" (
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX "companies_domain_idx" ON "companies" USING btree ("domain");
+CREATE UNIQUE INDEX IF NOT EXISTS "companies_domain_idx" ON "companies" USING btree ("domain");

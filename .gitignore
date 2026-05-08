@@ -24,8 +24,5 @@ npm-debug.log*
 .DS_Store
 *.sw?
 
-# Drizzle
-drizzle/meta
-
 # OS
 Thumbs.db
