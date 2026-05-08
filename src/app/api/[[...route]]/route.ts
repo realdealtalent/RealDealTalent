@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { createSession, verifySession, sessionCookieName } from "@/lib/auth";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
+import companiesApp from "./companies";
 
 const app = new Hono().basePath("/api");
 
@@ -60,6 +61,9 @@ app.use("/*", async (c, next) => {
 
   return next();
 });
+
+// Mount feature routes
+app.route("/companies", companiesApp);
 
 const handler = handle(app);
 
