@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 const STATUSES = [
@@ -54,6 +54,21 @@ type Company = {
   updatedAt: string;
 };
 
+type LostReason = {
+  id: string;
+  label: string;
+  slug: string;
+};
+
+type HistoryEntry = {
+  id: string;
+  fromStage: string | null;
+  toStage: string;
+  changedAt: string;
+  changedBy: string | null;
+  note: string | null;
+};
+
 export default function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -64,16 +79,62 @@ export default function CompanyDetailPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  useEffect(() => {
-    fetch(`/api/companies/${id}`)
-      .then((r) => {
-        if (!r.ok) throw new Error("Not found");
-        return r.json();
-      })
-      .then(setCompany)
-      .catch(() => setCompany(null))
-      .finally(() => setLoading(false));
+  // Transition state
+  const [transitioning, setTransitioning] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false);
+  const [lostReasons, setLostReasons] = useState<LostReason[]>([]);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+
+  const fetchHistory = useCallback(async () => {
+    const res = await fetch(`/api/companies/${id}/history`);
+    if (res.ok) setHistory(await res.json());
   }, [id]);
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`/api/companies/${id}`)
+        .then((r) => {
+          if (!r.ok) throw new Error("Not found");
+          return r.json();
+        })
+        .then(setCompany)
+        .catch(() => setCompany(null)),
+      fetchHistory(),
+      fetch("/api/lost-reasons")
+        .then((r) => r.json())
+        .then(setLostReasons)
+        .catch(() => {}),
+    ]).finally(() => setLoading(false));
+  }, [id, fetchHistory]);
+
+  const handleTransition = async (
+    newStatus: string,
+    opts?: { lostReasonSlug?: string; note?: string },
+  ) => {
+    setError("");
+    setSuccess("");
+    setTransitioning(true);
+
+    const res = await fetch(`/api/companies/${id}/transition`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: newStatus, ...opts }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      setError(data.error || "Transition failed");
+      setTransitioning(false);
+      return;
+    }
+
+    const updated = await res.json();
+    setCompany(updated);
+    setSuccess(`Status changed to ${STATUS_LABELS[newStatus] || newStatus}`);
+    setTransitioning(false);
+    fetchHistory();
+    setTimeout(() => setSuccess(""), 3000);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -99,14 +160,7 @@ export default function CompanyDetailPage() {
       linkedinUrl: (form.get("linkedinUrl") as string) || null,
       source: (form.get("source") as string) || null,
       owner: (form.get("owner") as string) || null,
-      status: form.get("status") as string,
     };
-
-    // Include lost reason/note if status is rejected
-    if (body.status === "rejected") {
-      body.lostReason = (form.get("lostReason") as string) || null;
-      body.lostNote = (form.get("lostNote") as string) || null;
-    }
 
     const res = await fetch(`/api/companies/${id}`, {
       method: "PATCH",
@@ -151,6 +205,9 @@ export default function CompanyDetailPage() {
     );
   }
 
+  // Determine valid next statuses for the transition controls
+  const nextStatuses = getNextStatuses(company.status);
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-8">
       <button
@@ -183,6 +240,48 @@ export default function CompanyDetailPage() {
       {error && (
         <div className="mb-4 rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
           {error}
+        </div>
+      )}
+
+      {/* Status transition controls */}
+      {!editing && (
+        <div className="mb-6 bg-white rounded-lg border border-gray-200 p-4">
+          <h2 className="text-sm font-semibold text-gray-700 mb-3">
+            Pipeline Actions
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {company.status === "rejected" ? (
+              <button
+                onClick={() => handleTransition("qualified")}
+                disabled={transitioning}
+                className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50"
+              >
+                {transitioning ? "Reactivating…" : "Reactivate to Qualified"}
+              </button>
+            ) : (
+              <>
+                {nextStatuses
+                  .filter((s) => s !== "rejected")
+                  .map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => handleTransition(s)}
+                      disabled={transitioning}
+                      className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      {transitioning ? "…" : STATUS_LABELS[s]}
+                    </button>
+                  ))}
+                <button
+                  onClick={() => setShowRejectModal(true)}
+                  disabled={transitioning}
+                  className="rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                >
+                  Reject
+                </button>
+              </>
+            )}
+          </div>
         </div>
       )}
 
@@ -326,35 +425,6 @@ export default function CompanyDetailPage() {
               name="owner"
               defaultValue={company.owner ?? ""}
             />
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Status
-              </label>
-              <select
-                name="status"
-                defaultValue={company.status}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-              >
-                {STATUSES.map((s) => (
-                  <option key={s} value={s}>
-                    {STATUS_LABELS[s]}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              label="Lost Reason"
-              name="lostReason"
-              defaultValue={company.lostReason ?? ""}
-            />
-            <FormField
-              label="Lost Note"
-              name="lostNote"
-              defaultValue={company.lostNote ?? ""}
-            />
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
@@ -378,7 +448,149 @@ export default function CompanyDetailPage() {
           </div>
         </form>
       )}
+
+      {/* Stage History Timeline */}
+      <div className="mt-8">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Stage History
+        </h2>
+        {history.length === 0 ? (
+          <p className="text-sm text-gray-500">No transitions recorded yet.</p>
+        ) : (
+          <div className="space-y-3">
+            {history.map((entry) => (
+              <div
+                key={entry.id}
+                className="bg-white rounded-lg border border-gray-200 px-4 py-3 text-sm"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500">
+                      {entry.fromStage
+                        ? STATUS_LABELS[entry.fromStage] || entry.fromStage
+                        : "—"}
+                    </span>
+                    <span className="text-gray-400">&rarr;</span>
+                    <span className="font-medium text-gray-900">
+                      {STATUS_LABELS[entry.toStage] || entry.toStage}
+                    </span>
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {new Date(entry.changedAt).toLocaleString()}
+                  </span>
+                </div>
+                {entry.note && (
+                  <p className="mt-1 text-gray-600">{entry.note}</p>
+                )}
+                {entry.changedBy && (
+                  <p className="mt-1 text-xs text-gray-400">
+                    by {entry.changedBy}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Rejection Modal */}
+      {showRejectModal && (
+        <RejectModal
+          lostReasons={lostReasons}
+          onConfirm={(slug, note) => {
+            setShowRejectModal(false);
+            handleTransition("rejected", { lostReasonSlug: slug, note });
+          }}
+          onCancel={() => setShowRejectModal(false)}
+        />
+      )}
     </main>
+  );
+}
+
+/** Determine valid next statuses based on current status. */
+function getNextStatuses(current: string): string[] {
+  // All statuses except the current one are valid transition targets.
+  // Special cases handled by the backend validation:
+  //   - rejected requires lost reason
+  //   - from rejected, only qualified is allowed
+  if (current === "rejected") return ["qualified"];
+  return STATUSES.filter((s) => s !== current);
+}
+
+function RejectModal({
+  lostReasons,
+  onConfirm,
+  onCancel,
+}: {
+  lostReasons: LostReason[];
+  onConfirm: (slug: string, note?: string) => void;
+  onCancel: () => void;
+}) {
+  const [selectedSlug, setSelectedSlug] = useState("");
+  const [note, setNote] = useState("");
+  const requiresNote = selectedSlug === "other_with_note";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">
+          Reject Company
+        </h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Lost Reason *
+            </label>
+            <select
+              value={selectedSlug}
+              onChange={(e) => setSelectedSlug(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            >
+              <option value="">Select a reason…</option>
+              {lostReasons.map((r) => (
+                <option key={r.slug} value={r.slug}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Note {requiresNote && "*"}
+            </label>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              rows={3}
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              placeholder={
+                requiresNote ? "Required for this reason" : "Optional"
+              }
+            />
+          </div>
+        </div>
+        <div className="flex justify-end gap-3 mt-6">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            disabled={
+              !selectedSlug || (requiresNote && !note.trim())
+            }
+            onClick={() => onConfirm(selectedSlug, note || undefined)}
+            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 

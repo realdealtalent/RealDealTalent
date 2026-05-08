@@ -7,6 +7,7 @@ import {
   uuid,
   text,
   integer,
+  boolean,
   timestamp,
   jsonb,
   uniqueIndex,
@@ -63,3 +64,28 @@ export const companies = pgTable(
 
 export type Company = typeof companies.$inferSelect;
 export type NewCompany = typeof companies.$inferInsert;
+
+export const lostReasons = pgTable("lost_reasons", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  label: text("label").notNull(),
+  slug: text("slug").notNull().unique(),
+  active: boolean("active").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+});
+
+export type LostReason = typeof lostReasons.$inferSelect;
+
+export const stageHistory = pgTable("stage_history", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  entityType: text("entity_type").notNull().default("company"),
+  entityId: uuid("entity_id").notNull(),
+  fromStage: text("from_stage"),
+  toStage: text("to_stage").notNull(),
+  changedAt: timestamp("changed_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  changedBy: text("changed_by"),
+  note: text("note"),
+});
+
+export type StageHistoryRecord = typeof stageHistory.$inferSelect;

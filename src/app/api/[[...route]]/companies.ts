@@ -1,7 +1,9 @@
 import { Hono } from "hono";
 import { db } from "@/db";
-import { companies } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { companies, stageHistory, companyStatus } from "@/db/schema";
+import type { CompanyStatus } from "@/db/schema";
+import { eq, desc } from "drizzle-orm";
+import { transitionStatus } from "@/lib/pipeline";
 
 const app = new Hono();
 
@@ -153,6 +155,45 @@ app.patch("/:id", async (c) => {
   }
 
   return c.json(company);
+});
+
+// POST /api/companies/:id/transition — advance pipeline status
+app.post("/:id/transition", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+
+  if (!body.status) {
+    return c.json({ error: "status is required" }, 400);
+  }
+
+  if (!companyStatus.includes(body.status)) {
+    return c.json({ error: `Invalid status: ${body.status}` }, 400);
+  }
+
+  const result = await transitionStatus(id, body.status as CompanyStatus, {
+    lostReasonSlug: body.lostReasonSlug ?? undefined,
+    note: body.note ?? undefined,
+    changedBy: body.changedBy ?? undefined,
+  });
+
+  if (!result.ok) {
+    return c.json({ error: result.error }, 400);
+  }
+
+  return c.json(result.company);
+});
+
+// GET /api/companies/:id/history — stage history timeline
+app.get("/:id/history", async (c) => {
+  const id = c.req.param("id");
+
+  const rows = await db
+    .select()
+    .from(stageHistory)
+    .where(eq(stageHistory.entityId, id))
+    .orderBy(desc(stageHistory.changedAt));
+
+  return c.json(rows);
 });
 
 export default app;
