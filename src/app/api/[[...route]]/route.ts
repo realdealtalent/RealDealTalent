@@ -4,6 +4,7 @@ import { createSession, verifySession, sessionCookieName } from "@/lib/auth";
 import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import companiesApp from "./companies";
 import lostReasonsApp from "./lost-reasons";
+import configApp from "./config";
 
 const app = new Hono().basePath("/api");
 
@@ -66,6 +67,7 @@ app.use("/*", async (c, next) => {
 // Mount feature routes
 app.route("/companies", companiesApp);
 app.route("/lost-reasons", lostReasonsApp);
+app.route("/config", configApp);
 
 const handler = handle(app);
 

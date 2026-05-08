@@ -78,12 +78,12 @@ export function computeScore(
 
 // --- DB functions ---
 
-async function getFilterConfig() {
+export async function getFilterConfig() {
   const [config] = await db.select().from(filterConfig).limit(1);
   return config?.filters ?? { headcount_min: 25, headcount_max: 300, geography: ["US", "CA"] };
 }
 
-async function getScoringConfig() {
+export async function getScoringConfig() {
   const [config] = await db.select().from(scoringConfig).limit(1);
   return {
     weights: config?.weights ?? {
@@ -204,6 +204,86 @@ export async function evaluateQualification(companyId: string): Promise<Company>
   }
 
   return updated;
+}
+
+export async function recomputeAllScores(): Promise<{
+  total: number;
+  advanced: number;
+  reverted: number;
+}> {
+  const filters = await getFilterConfig();
+  const { weights, threshold } = await getScoringConfig();
+
+  const allCompanies = await db.select().from(companies);
+  const allSignals = await db.select().from(companySignals);
+
+  // Group signals by company
+  const signalsByCompany = new Map<string, typeof allSignals>();
+  for (const signal of allSignals) {
+    const arr = signalsByCompany.get(signal.companyId) ?? [];
+    arr.push(signal);
+    signalsByCompany.set(signal.companyId, arr);
+  }
+
+  let advanced = 0;
+  let reverted = 0;
+  const now = new Date();
+
+  for (const company of allCompanies) {
+    const signals = signalsByCompany.get(company.id) ?? [];
+    const { total } = computeScore(
+      signals.map((s) => ({ signalType: s.signalType, weightAtObservation: s.weightAtObservation })),
+      weights,
+    );
+
+    const filterResult = checkHardFilters(
+      { employeeCount: company.employeeCount, hqCountry: company.hqCountry },
+      filters,
+    );
+
+    const qualifies = filterResult.pass && total >= threshold;
+    const updates: Record<string, unknown> = {
+      currentScore: total,
+      updatedAt: now,
+    };
+
+    let newStatus: string | null = null;
+
+    // prospect -> qualified if now qualifies
+    if (company.status === "prospect" && qualifies) {
+      newStatus = "qualified";
+      advanced++;
+    }
+    // qualified -> prospect if no longer qualifies
+    else if (company.status === "qualified" && !qualifies) {
+      newStatus = "prospect";
+      reverted++;
+    }
+
+    if (newStatus) {
+      updates.status = newStatus;
+      updates.statusChangedAt = now;
+    }
+
+    await db
+      .update(companies)
+      .set(updates)
+      .where(eq(companies.id, company.id));
+
+    if (newStatus) {
+      await db.insert(stageHistory).values({
+        entityType: "company",
+        entityId: company.id,
+        fromStage: company.status,
+        toStage: newStatus,
+        changedAt: now,
+        changedBy: "system:config-recompute",
+        note: `Config changed: score ${total}, threshold ${threshold}, filters ${filterResult.pass ? "pass" : "fail"}`,
+      });
+    }
+  }
+
+  return { total: allCompanies.length, advanced, reverted };
 }
 
 export async function getScoreBreakdown(companyId: string): Promise<ScoreBreakdown> {

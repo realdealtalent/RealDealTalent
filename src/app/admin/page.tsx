@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import AddCompanyModal from "./add-company-modal";
 
 const PIPELINE_STATUSES = [
@@ -56,12 +57,20 @@ export default function PipelineBoard() {
         <h1 className="text-xl font-bold text-gray-900">
           Real Deal Talent — Pipeline
         </h1>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-        >
-          + Add Company
-        </button>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/settings"
+            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          >
+            Settings
+          </Link>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          >
+            + Add Company
+          </button>
+        </div>
       </header>
 
       {loading ? (
