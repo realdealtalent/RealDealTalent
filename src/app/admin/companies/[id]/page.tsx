@@ -52,6 +52,7 @@ type Company = {
   owner: string | null;
   createdAt: string;
   updatedAt: string;
+  scoreBreakdown?: ScoreBreakdown;
 };
 
 type LostReason = {
@@ -69,6 +70,42 @@ type HistoryEntry = {
   note: string | null;
 };
 
+type ScoreBreakdown = {
+  signals: Array<{
+    id: string;
+    signalType: string;
+    weight: number;
+    points: number;
+    source: string | null;
+    observedAt: string;
+    value: unknown;
+  }>;
+  totalScore: number;
+  threshold: number;
+  filtersPass: boolean;
+  filterResults: {
+    headcount: { pass: boolean; value: number | null; min: number; max: number };
+    geography: { pass: boolean; value: string | null; allowed: string[] };
+  };
+  meetsThreshold: boolean;
+  qualifies: boolean;
+};
+
+const SIGNAL_TYPES = [
+  { value: "open_sales_role", label: "Open Sales Role" },
+  { value: "open_ops_role", label: "Open Ops Role" },
+  { value: "recent_funding", label: "Recent Funding" },
+  { value: "leadership_change", label: "Leadership Change" },
+  { value: "pe_owned", label: "PE Owned" },
+  { value: "multi_site_expansion", label: "Multi-Site Expansion" },
+  { value: "certification_added", label: "Certification Added" },
+  { value: "event_exhibitor", label: "Event Exhibitor" },
+];
+
+const SIGNAL_LABELS: Record<string, string> = Object.fromEntries(
+  SIGNAL_TYPES.map((s) => [s.value, s.label]),
+);
+
 export default function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -85,6 +122,15 @@ export default function CompanyDetailPage() {
   const [lostReasons, setLostReasons] = useState<LostReason[]>([]);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
 
+  const fetchCompany = useCallback(async () => {
+    const res = await fetch(`/api/companies/${id}`);
+    if (res.ok) {
+      setCompany(await res.json());
+    } else {
+      setCompany(null);
+    }
+  }, [id]);
+
   const fetchHistory = useCallback(async () => {
     const res = await fetch(`/api/companies/${id}/history`);
     if (res.ok) setHistory(await res.json());
@@ -92,20 +138,14 @@ export default function CompanyDetailPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`/api/companies/${id}`)
-        .then((r) => {
-          if (!r.ok) throw new Error("Not found");
-          return r.json();
-        })
-        .then(setCompany)
-        .catch(() => setCompany(null)),
+      fetchCompany(),
       fetchHistory(),
       fetch("/api/lost-reasons")
         .then((r) => r.json())
         .then(setLostReasons)
         .catch(() => {}),
     ]).finally(() => setLoading(false));
-  }, [id, fetchHistory]);
+  }, [id, fetchCompany, fetchHistory]);
 
   const handleTransition = async (
     newStatus: string,
@@ -180,6 +220,31 @@ export default function CompanyDetailPage() {
     setEditing(false);
     setSuccess("Company updated");
     setSaving(false);
+    setTimeout(() => setSuccess(""), 3000);
+  };
+
+  const handleAddSignal = async (signalType: string, source: string) => {
+    setError("");
+    setSuccess("");
+
+    const res = await fetch(`/api/companies/${id}/signals`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ signalType, source: source || undefined }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      setError(data.error || "Failed to add signal");
+      return;
+    }
+
+    const { company: updated } = await res.json();
+    setCompany({ ...updated, scoreBreakdown: company?.scoreBreakdown });
+    setSuccess("Signal added");
+    // Refetch to get updated score breakdown
+    fetchCompany();
+    fetchHistory();
     setTimeout(() => setSuccess(""), 3000);
   };
 
@@ -449,6 +514,85 @@ export default function CompanyDetailPage() {
         </form>
       )}
 
+      {/* Why this score panel */}
+      {!editing && company.scoreBreakdown && (
+        <div className="mt-8 bg-white rounded-lg border border-gray-200 p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Why this score
+          </h2>
+
+          {/* Filter status */}
+          <div className="mb-4">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Hard Filters</h3>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className={`rounded-md px-3 py-2 ${company.scoreBreakdown.filterResults.headcount.pass ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
+                <span className="font-medium">Headcount:</span>{" "}
+                {company.scoreBreakdown.filterResults.headcount.value ?? "not set"}{" "}
+                (range: {company.scoreBreakdown.filterResults.headcount.min}–{company.scoreBreakdown.filterResults.headcount.max})
+                {" "}{company.scoreBreakdown.filterResults.headcount.pass ? "PASS" : "FAIL"}
+              </div>
+              <div className={`rounded-md px-3 py-2 ${company.scoreBreakdown.filterResults.geography.pass ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
+                <span className="font-medium">Geography:</span>{" "}
+                {company.scoreBreakdown.filterResults.geography.value ?? "not set"}{" "}
+                (allowed: {company.scoreBreakdown.filterResults.geography.allowed.join(", ")})
+                {" "}{company.scoreBreakdown.filterResults.geography.pass ? "PASS" : "FAIL"}
+              </div>
+            </div>
+          </div>
+
+          {/* Score breakdown */}
+          <div className="mb-4">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Signal Breakdown</h3>
+            {company.scoreBreakdown.signals.length === 0 ? (
+              <p className="text-sm text-gray-500">No signals recorded yet.</p>
+            ) : (
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-200 text-left text-gray-500">
+                    <th className="pb-2 font-medium">Signal</th>
+                    <th className="pb-2 font-medium">Points</th>
+                    <th className="pb-2 font-medium">Source</th>
+                    <th className="pb-2 font-medium">Observed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {company.scoreBreakdown.signals.map((s) => (
+                    <tr key={s.id} className="border-b border-gray-100">
+                      <td className="py-2 text-gray-900">{SIGNAL_LABELS[s.signalType] || s.signalType}</td>
+                      <td className="py-2 font-mono text-blue-600">+{s.points}</td>
+                      <td className="py-2 text-gray-500">{s.source || "—"}</td>
+                      <td className="py-2 text-gray-400 text-xs">{new Date(s.observedAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          {/* Threshold */}
+          <div className="flex items-center gap-4 text-sm rounded-md bg-gray-50 px-4 py-3">
+            <span>
+              <span className="font-medium text-gray-700">Total Score:</span>{" "}
+              <span className="font-mono text-blue-600">{company.scoreBreakdown.totalScore}</span>
+            </span>
+            <span className="text-gray-300">|</span>
+            <span>
+              <span className="font-medium text-gray-700">Threshold:</span>{" "}
+              <span className="font-mono">{company.scoreBreakdown.threshold}</span>
+            </span>
+            <span className="text-gray-300">|</span>
+            <span className={company.scoreBreakdown.qualifies ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
+              {company.scoreBreakdown.qualifies ? "Qualifies" : "Does not qualify"}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Add Signal form */}
+      {!editing && (
+        <AddSignalForm onAdd={handleAddSignal} />
+      )}
+
       {/* Stage History Timeline */}
       <div className="mt-8">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -590,6 +734,69 @@ function RejectModal({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function AddSignalForm({
+  onAdd,
+}: {
+  onAdd: (signalType: string, source: string) => void;
+}) {
+  const [signalType, setSignalType] = useState("");
+  const [source, setSource] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signalType) return;
+    setSubmitting(true);
+    await onAdd(signalType, source);
+    setSignalType("");
+    setSource("");
+    setSubmitting(false);
+  };
+
+  return (
+    <div className="mt-6 bg-white rounded-lg border border-gray-200 p-6">
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Signal</h2>
+      <form onSubmit={handleSubmit} className="flex items-end gap-3">
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Signal Type *
+          </label>
+          <select
+            value={signalType}
+            onChange={(e) => setSignalType(e.target.value)}
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          >
+            <option value="">Select signal…</option>
+            {SIGNAL_TYPES.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Source
+          </label>
+          <input
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            placeholder="e.g. LinkedIn, ZoomInfo"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={!signalType || submitting}
+          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+        >
+          {submitting ? "Adding…" : "Add"}
+        </button>
+      </form>
     </div>
   );
 }

@@ -89,3 +89,65 @@ export const stageHistory = pgTable("stage_history", {
 });
 
 export type StageHistoryRecord = typeof stageHistory.$inferSelect;
+
+// --- Issue #5: Signals, scoring, auto-qualification ---
+
+export const signalTypes = [
+  "open_sales_role",
+  "open_ops_role",
+  "recent_funding",
+  "leadership_change",
+  "pe_owned",
+  "multi_site_expansion",
+  "certification_added",
+  "event_exhibitor",
+] as const;
+
+export type SignalType = (typeof signalTypes)[number];
+
+export const companySignals = pgTable("company_signals", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  companyId: uuid("company_id")
+    .notNull()
+    .references(() => companies.id),
+  signalType: text("signal_type").notNull(),
+  value: jsonb("value"),
+  source: text("source"),
+  observedAt: timestamp("observed_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  weightAtObservation: integer("weight_at_observation").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export type CompanySignal = typeof companySignals.$inferSelect;
+export type NewCompanySignal = typeof companySignals.$inferInsert;
+
+export const filterConfig = pgTable("filter_config", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  filters: jsonb("filters")
+    .notNull()
+    .$type<{ headcount_min: number; headcount_max: number; geography: string[] }>(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedBy: text("updated_by"),
+});
+
+export type FilterConfig = typeof filterConfig.$inferSelect;
+
+export const scoringConfig = pgTable("scoring_config", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  weights: jsonb("weights")
+    .notNull()
+    .$type<Record<string, number>>(),
+  threshold: integer("threshold").notNull().default(50),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedBy: text("updated_by"),
+});
+
+export type ScoringConfig = typeof scoringConfig.$inferSelect;

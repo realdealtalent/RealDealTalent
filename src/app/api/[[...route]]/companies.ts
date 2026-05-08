@@ -1,9 +1,10 @@
 import { Hono } from "hono";
 import { db } from "@/db";
-import { companies, stageHistory, companyStatus } from "@/db/schema";
-import type { CompanyStatus } from "@/db/schema";
+import { companies, stageHistory, companyStatus, signalTypes } from "@/db/schema";
+import type { CompanyStatus, SignalType } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { transitionStatus } from "@/lib/pipeline";
+import { addSignal, getScoreBreakdown } from "@/lib/scoring";
 
 const app = new Hono();
 
@@ -66,7 +67,7 @@ app.get("/", async (c) => {
   return c.json(rows);
 });
 
-// GET /api/companies/:id — detail
+// GET /api/companies/:id — detail with score breakdown
 app.get("/:id", async (c) => {
   const id = c.req.param("id");
 
@@ -80,7 +81,9 @@ app.get("/:id", async (c) => {
     return c.json({ error: "Company not found" }, 404);
   }
 
-  return c.json(company);
+  const scoreBreakdown = await getScoreBreakdown(id);
+
+  return c.json({ ...company, scoreBreakdown });
 });
 
 // PATCH /api/companies/:id — update firmographic fields
@@ -155,6 +158,33 @@ app.patch("/:id", async (c) => {
   }
 
   return c.json(company);
+});
+
+// POST /api/companies/:id/signals — add a signal
+app.post("/:id/signals", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+
+  if (!body.signalType) {
+    return c.json({ error: "signalType is required" }, 400);
+  }
+
+  if (!signalTypes.includes(body.signalType)) {
+    return c.json({ error: `Invalid signal type: ${body.signalType}` }, 400);
+  }
+
+  const result = await addSignal(id, {
+    signalType: body.signalType as SignalType,
+    value: body.value ?? undefined,
+    source: body.source ?? undefined,
+    observedAt: body.observedAt ? new Date(body.observedAt) : undefined,
+  });
+
+  if (!result.ok) {
+    return c.json({ error: result.error }, 404);
+  }
+
+  return c.json({ signal: result.signal, company: result.company }, 201);
 });
 
 // POST /api/companies/:id/transition — advance pipeline status
