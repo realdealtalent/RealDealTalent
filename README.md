@@ -1,69 +1,65 @@
-# Welcome to your Lovable project
+# Real Deal Talent
 
-## Project info
+Internal pipeline management tool for a solo recruiting operator. Tracks companies from discovery through signing, manages BD outreach, and organizes the full placement lifecycle.
 
-**URL**: https://lovable.dev/projects/49b91cd0-019d-4649-9388-70b69a2e1bb6
+## Tech stack
 
-## How can I edit this code?
+- **Framework:** Next.js 15 (App Router)
+- **API:** Hono (mounted on Next.js API routes)
+- **Database:** PostgreSQL (Neon) with Drizzle ORM
+- **Auth:** JWT-based session cookies (Entra ID planned for v1)
+- **Styling:** Tailwind CSS
+- **Testing:** Vitest
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/49b91cd0-019d-4649-9388-70b69a2e1bb6) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Install dependencies
+pnpm install
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Copy env and fill in values
+cp .env.example .env.local
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Push schema to database
+pnpm drizzle-kit push
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Seed lost reasons
+pnpm tsx src/db/seed-lost-reasons.ts
+
+# Start dev server
+pnpm dev
 ```
 
-**Edit a file directly in GitHub**
+## Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start Next.js dev server |
+| `pnpm build` | Production build |
+| `pnpm test` | Run tests in watch mode |
+| `pnpm test:run` | Run tests once |
+| `pnpm drizzle-kit generate` | Generate a migration from schema changes |
+| `pnpm drizzle-kit migrate` | Apply pending migrations |
+| `pnpm drizzle-kit push` | Push schema directly (dev) |
+| `pnpm drizzle-kit studio` | Open Drizzle Studio GUI |
 
-**Use GitHub Codespaces**
+## Project structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+  app/                  Next.js pages and layouts
+    admin/              Pipeline board, company detail
+    api/[[...route]]/   Hono API routes
+  db/                   Drizzle schema, migrations, seeds
+  lib/                  Auth, pipeline engine, shared logic
+  __tests__/            Unit and integration tests
+docs/
+  adr/                  Architecture decision records
+  agents/               Agent protocol docs
+drizzle/                SQL migration files
+```
 
-## What technologies are used for this project?
+## Domain docs
 
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/49b91cd0-019d-4649-9388-70b69a2e1bb6) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+- `CONTEXT.md` — domain glossary and entity definitions
+- `docs/adr/` — architecture decision records
