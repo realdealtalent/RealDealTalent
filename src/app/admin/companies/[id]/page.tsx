@@ -698,19 +698,31 @@ function RejectModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Reject Company
-        </h2>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="text-lg font-semibold text-gray-900">
+            Reject Company
+          </h2>
+          <Button
+            type="button"
+            onClick={onCancel}
+            variant="ghost"
+            size="sm"
+            aria-label="Close reject company modal"
+            className="min-h-0 px-2 py-1 text-xl leading-none text-gray-400 hover:bg-transparent hover:text-gray-600"
+          >
+            &times;
+          </Button>
+        </div>
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Lost Reason *
             </label>
-          <select
-            value={selectedSlug}
-            onChange={(e) => setSelectedSlug(e.target.value)}
-            className={tokens.input.base}
-          >
+            <select
+              value={selectedSlug}
+              onChange={(e) => setSelectedSlug(e.target.value)}
+              className={tokens.input.base}
+            >
               <option value="">Select a reason…</option>
               {lostReasons.map((r) => (
                 <option key={r.slug} value={r.slug}>

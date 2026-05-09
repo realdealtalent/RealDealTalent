@@ -608,6 +608,7 @@ function LostReasonRow({
           disabled={isFirst}
           variant="ghost"
           size="sm"
+          aria-label={`Move ${reason.label} up`}
           className="min-h-0 px-1 py-0 text-xs text-gray-400 hover:bg-transparent hover:text-gray-600"
         >
           ▲
@@ -618,6 +619,7 @@ function LostReasonRow({
           disabled={isLast}
           variant="ghost"
           size="sm"
+          aria-label={`Move ${reason.label} down`}
           className="min-h-0 px-1 py-0 text-xs text-gray-400 hover:bg-transparent hover:text-gray-600"
         >
           ▼

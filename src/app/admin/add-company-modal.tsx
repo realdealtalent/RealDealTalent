@@ -58,6 +58,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             onClick={onClose}
             variant="ghost"
             size="sm"
+            aria-label="Close add company modal"
             className="min-h-0 px-2 py-1 text-xl leading-none text-gray-400 hover:bg-transparent hover:text-gray-600"
           >
             &times;

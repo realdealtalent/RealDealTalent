@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { CompanyStatus } from "@/db/schema";
 import { Button } from "@/components/button";
@@ -24,7 +23,6 @@ export default function PipelineBoard() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
-  const router = useRouter();
 
   const fetchCompanies = async () => {
     const res = await fetch("/api/companies");
@@ -89,13 +87,9 @@ export default function PipelineBoard() {
                     </p>
                   ) : (
                     col.companies.map((company) => (
-                      <Button
+                      <Link
                         key={company.id}
-                        onClick={() =>
-                          router.push(`/admin/companies/${company.id}`)
-                        }
-                        variant="ghost"
-                        size="sm"
+                        href={`/admin/companies/${company.id}`}
                         className="block h-auto w-full rounded-md border border-gray-200 bg-white p-3 text-left transition-shadow hover:bg-white hover:shadow-md"
                       >
                         <p className="text-sm font-medium text-gray-900 truncate">
@@ -117,7 +111,7 @@ export default function PipelineBoard() {
                             {company.currentScore} pts
                           </span>
                         </div>
-                      </Button>
+                      </Link>
                     ))
                   )}
                 </div>
