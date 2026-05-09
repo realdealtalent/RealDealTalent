@@ -3,7 +3,7 @@
 import { type ReactNode, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { tokens } from "@/components/design-tokens";
+import { FormField, FormMessage, Input } from "@/components/forms";
 import { Skeleton } from "@/components/skeleton";
 import type { SignalType } from "@/db/schema";
 import { SIGNAL_LABELS, SIGNAL_TYPES } from "@/lib/pipeline-vocab";
@@ -245,34 +245,28 @@ export default function SettingsPage() {
         </p>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Headcount Min
-            </label>
-            <input
+          <FormField label="Headcount Min" htmlFor="headcount-min">
+            <Input
+              id="headcount-min"
               type="number"
               value={filters.headcount_min}
               onChange={(e) =>
                 setFilters((prev) => ({ ...prev, headcount_min: Number(e.target.value) }))
               }
               min={0}
-              className={tokens.input.base}
             />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Headcount Max
-            </label>
-            <input
+          </FormField>
+          <FormField label="Headcount Max" htmlFor="headcount-max">
+            <Input
+              id="headcount-max"
               type="number"
               value={filters.headcount_max}
               onChange={(e) =>
                 setFilters((prev) => ({ ...prev, headcount_max: Number(e.target.value) }))
               }
               min={0}
-              className={tokens.input.base}
             />
-          </div>
+          </FormField>
         </div>
 
         <div className="mb-4">
@@ -300,7 +294,9 @@ export default function SettingsPage() {
         </div>
 
         {filtersMessage && (
-          <Message type={filtersMessage.type} text={filtersMessage.text} />
+          <FormMessage type={filtersMessage.type}>
+            {filtersMessage.text}
+          </FormMessage>
         )}
 
         <div className="flex justify-end">
@@ -361,34 +357,36 @@ export default function SettingsPage() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Qualification Threshold
-          </label>
-          <div className="flex items-center gap-3">
-            <input
-              type="range"
-              min={0}
-              max={200}
-              value={scoring.threshold}
-              onChange={(e) =>
-                setScoring((prev) => ({ ...prev, threshold: Number(e.target.value) }))
-              }
-              className="flex-1"
-            />
-            <input
-              type="number"
-              value={scoring.threshold}
-              onChange={(e) =>
-                setScoring((prev) => ({ ...prev, threshold: Number(e.target.value) }))
-              }
-              min={0}
-                className={`${tokens.input.base} w-20 font-mono`}
+          <FormField label="Qualification Threshold" htmlFor="qualification-threshold">
+            <div className="flex items-center gap-3">
+              <input
+                type="range"
+                min={0}
+                max={200}
+                value={scoring.threshold}
+                onChange={(e) =>
+                  setScoring((prev) => ({ ...prev, threshold: Number(e.target.value) }))
+                }
+                className="flex-1"
               />
-          </div>
+              <Input
+                id="qualification-threshold"
+                type="number"
+                value={scoring.threshold}
+                onChange={(e) =>
+                  setScoring((prev) => ({ ...prev, threshold: Number(e.target.value) }))
+                }
+                min={0}
+                className="w-20 font-mono"
+              />
+            </div>
+          </FormField>
         </div>
 
         {scoringMessage && (
-          <Message type={scoringMessage.type} text={scoringMessage.text} />
+          <FormMessage type={scoringMessage.type}>
+            {scoringMessage.text}
+          </FormMessage>
         )}
 
         <div className="flex justify-end">
@@ -425,7 +423,9 @@ export default function SettingsPage() {
         </div>
 
         {reasonsMessage && (
-          <Message type={reasonsMessage.type} text={reasonsMessage.text} />
+          <FormMessage type={reasonsMessage.type}>
+            {reasonsMessage.text}
+          </FormMessage>
         )}
 
         <div className="border-t border-gray-200 pt-4 mt-4">
@@ -433,7 +433,7 @@ export default function SettingsPage() {
           <div className="flex items-end gap-3">
             <div className="flex-1">
               <label className="block text-xs text-gray-500 mb-1">Label</label>
-              <input
+              <Input
                 value={newReasonLabel}
                 onChange={(e) => {
                   setNewReasonLabel(e.target.value);
@@ -442,16 +442,15 @@ export default function SettingsPage() {
                   }
                 }}
                 placeholder="e.g. Acquired by competitor"
-                className={tokens.input.base}
               />
             </div>
             <div className="flex-1">
               <label className="block text-xs text-gray-500 mb-1">Slug</label>
-              <input
+              <Input
                 value={newReasonSlug}
                 onChange={(e) => setNewReasonSlug(e.target.value)}
                 placeholder="e.g. acquired_by_competitor"
-                className={`${tokens.input.base} font-mono`}
+                className="font-mono"
               />
             </div>
             <Button
@@ -628,15 +627,15 @@ function LostReasonRow({
 
       {editing ? (
         <>
-          <input
+          <Input
             value={label}
             onChange={(e) => setLabel(e.target.value)}
-            className={`${tokens.input.base} flex-1 px-2 py-1`}
+            className="flex-1 px-2 py-1"
           />
-          <input
+          <Input
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
-            className={`${tokens.input.base} w-40 px-2 py-1 font-mono`}
+            className="w-40 px-2 py-1 font-mono"
           />
           <Button
             onClick={save}
@@ -683,20 +682,6 @@ function LostReasonRow({
       >
         {reason.active ? "Deactivate" : "Activate"}
       </Button>
-    </div>
-  );
-}
-
-function Message({ type, text }: { type: "success" | "error"; text: string }) {
-  return (
-    <div
-      className={`mb-4 rounded-md border px-4 py-3 text-sm ${
-        type === "success"
-          ? "bg-green-50 border-green-200 text-green-700"
-          : "bg-red-50 border-red-200 text-red-700"
-      }`}
-    >
-      {text}
     </div>
   );
 }

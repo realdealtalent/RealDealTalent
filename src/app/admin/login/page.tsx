@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { tokens } from "@/components/design-tokens";
+import { FormField, FormMessage, Input } from "@/components/forms";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -43,32 +43,28 @@ export default function LoginPage() {
           Sign in
         </h1>
         {error && (
-          <p className="text-sm text-red-600 text-center">{error}</p>
+          <FormMessage type="error" className="text-center">
+            {error}
+          </FormMessage>
         )}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <input
+        <FormField label="Email" htmlFor="email">
+          <Input
+            id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className={tokens.input.base}
           />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Password
-          </label>
-          <input
+        </FormField>
+        <FormField label="Password" htmlFor="password">
+          <Input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className={tokens.input.base}
           />
-        </div>
+        </FormField>
         <Button
           type="submit"
           loading={loading}

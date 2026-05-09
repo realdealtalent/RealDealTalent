@@ -4,7 +4,14 @@ import type { ReactNode } from "react";
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { tokens } from "@/components/design-tokens";
+import {
+  Field,
+  FormField,
+  FormMessage,
+  Input,
+  Select,
+  Textarea,
+} from "@/components/forms";
 import type { CompanyStatus, SignalType } from "@/db/schema";
 import { Pill } from "@/components/pill";
 import { Skeleton } from "@/components/skeleton";
@@ -265,14 +272,14 @@ export default function CompanyDetailPage() {
       </div>
 
       {success && (
-        <div className="mb-4 rounded-md bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+        <FormMessage type="success" className="mb-4">
           {success}
-        </div>
+        </FormMessage>
       )}
       {error && (
-        <div className="mb-4 rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+        <FormMessage type="error" className="mb-4">
           {error}
-        </div>
+        </FormMessage>
       )}
 
       {/* Status transition controls */}
@@ -379,69 +386,108 @@ export default function CompanyDetailPage() {
           className="bg-white rounded-lg border border-gray-200 p-6 space-y-4"
         >
           <div className="grid grid-cols-2 gap-4">
-            <FormField label="Name *" name="name" defaultValue={company.name} required />
+            <FormField
+              label="Name *"
+              htmlFor="company-name"
+            >
+              <Input
+                id="company-name"
+                name="name"
+                defaultValue={company.name}
+                required
+              />
+            </FormField>
             <FormField
               label="Domain *"
-              name="domain"
-              defaultValue={company.domain}
-              required
-            />
+              htmlFor="company-domain"
+            >
+              <Input
+                id="company-domain"
+                name="domain"
+                defaultValue={company.domain}
+                required
+              />
+            </FormField>
             <FormField
               label="HQ Country"
-              name="hqCountry"
-              defaultValue={company.hqCountry ?? ""}
-            />
+              htmlFor="company-hq-country"
+            >
+              <Input
+                id="company-hq-country"
+                name="hqCountry"
+                defaultValue={company.hqCountry ?? ""}
+              />
+            </FormField>
             <FormField
               label="HQ State"
-              name="hqState"
-              defaultValue={company.hqState ?? ""}
-            />
+              htmlFor="company-hq-state"
+            >
+              <Input
+                id="company-hq-state"
+                name="hqState"
+                defaultValue={company.hqState ?? ""}
+              />
+            </FormField>
             <FormField
               label="Employee Count"
-              name="employeeCount"
-              type="number"
-              defaultValue={company.employeeCount?.toString() ?? ""}
-            />
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Employee Band
-              </label>
-              <select
+              htmlFor="company-employee-count"
+            >
+              <Input
+                id="company-employee-count"
+                name="employeeCount"
+                type="number"
+                defaultValue={company.employeeCount?.toString() ?? ""}
+              />
+            </FormField>
+            <FormField label="Employee Band" htmlFor="company-employee-band">
+              <Select
+                id="company-employee-band"
                 name="employeeBand"
                 defaultValue={company.employeeBand ?? ""}
-                className={tokens.input.base}
               >
                 <option value="">Select…</option>
                 <option value="<25">&lt;25</option>
                 <option value="25-100">25-100</option>
                 <option value="100-300">100-300</option>
                 <option value="300+">300+</option>
-              </select>
-            </div>
+              </Select>
+            </FormField>
             <FormField
               label="Industry"
-              name="industry"
-              defaultValue={company.industry?.join(", ") ?? ""}
-              placeholder="Comma-separated"
-            />
+              htmlFor="company-industry"
+            >
+              <Input
+                id="company-industry"
+                name="industry"
+                defaultValue={company.industry?.join(", ") ?? ""}
+                placeholder="Comma-separated"
+              />
+            </FormField>
             <FormField
               label="Revenue Band"
-              name="revenueBand"
-              defaultValue={company.revenueBand ?? ""}
-            />
+              htmlFor="company-revenue-band"
+            >
+              <Input
+                id="company-revenue-band"
+                name="revenueBand"
+                defaultValue={company.revenueBand ?? ""}
+              />
+            </FormField>
             <FormField
               label="LinkedIn URL"
-              name="linkedinUrl"
-              defaultValue={company.linkedinUrl ?? ""}
-            />
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Source
-              </label>
-              <select
+              htmlFor="company-linkedin-url"
+            >
+              <Input
+                id="company-linkedin-url"
+                name="linkedinUrl"
+                defaultValue={company.linkedinUrl ?? ""}
+              />
+            </FormField>
+            <FormField label="Source" htmlFor="company-source">
+              <Select
+                id="company-source"
                 name="source"
                 defaultValue={company.source ?? ""}
-                className={tokens.input.base}
               >
                 <option value="">Select…</option>
                 <option value="manual">Manual</option>
@@ -450,13 +496,18 @@ export default function CompanyDetailPage() {
                 <option value="linkedin">LinkedIn</option>
                 <option value="csv">CSV Import</option>
                 <option value="referral">Referral</option>
-              </select>
-            </div>
+              </Select>
+            </FormField>
             <FormField
               label="Owner"
-              name="owner"
-              defaultValue={company.owner ?? ""}
-            />
+              htmlFor="company-owner"
+            >
+              <Input
+                id="company-owner"
+                name="owner"
+                defaultValue={company.owner ?? ""}
+              />
+            </FormField>
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
@@ -714,14 +765,11 @@ function RejectModal({
           </Button>
         </div>
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Lost Reason *
-            </label>
-            <select
+          <FormField label="Lost Reason *" htmlFor="lost-reason">
+            <Select
+              id="lost-reason"
               value={selectedSlug}
               onChange={(e) => setSelectedSlug(e.target.value)}
-              className={tokens.input.base}
             >
               <option value="">Select a reason…</option>
               {lostReasons.map((r) => (
@@ -729,22 +777,19 @@ function RejectModal({
                   {r.label}
                 </option>
               ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Note {requiresNote && "*"}
-            </label>
-            <textarea
+            </Select>
+          </FormField>
+          <FormField label={`Note ${requiresNote ? "*" : ""}`} htmlFor="lost-note">
+            <Textarea
+              id="lost-note"
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows={3}
-              className={tokens.input.base}
               placeholder={
                 requiresNote ? "Required for this reason" : "Optional"
               }
             />
-          </div>
+          </FormField>
         </div>
         <div className="flex justify-end gap-3 mt-6">
           <Button
@@ -794,32 +839,30 @@ function AddSignalForm({
       <h2 className="text-lg font-semibold text-gray-900 mb-4">Add Signal</h2>
       <form onSubmit={handleSubmit} className="flex items-end gap-3">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Signal Type *
-          </label>
-          <select
-            value={signalType}
-            onChange={(e) => setSignalType(e.target.value as SignalType | "")}
-            className={tokens.input.base}
-          >
-            <option value="">Select signal…</option>
-            {SIGNAL_TYPES.map((s) => (
-              <option key={s} value={s}>
-                {SIGNAL_LABELS[s]}
-              </option>
-            ))}
-          </select>
+          <FormField label="Signal Type *" htmlFor="signal-type">
+            <Select
+              id="signal-type"
+              value={signalType}
+              onChange={(e) => setSignalType(e.target.value as SignalType | "")}
+            >
+              <option value="">Select signal…</option>
+              {SIGNAL_TYPES.map((s) => (
+                <option key={s} value={s}>
+                  {SIGNAL_LABELS[s]}
+                </option>
+              ))}
+            </Select>
+          </FormField>
         </div>
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Source
-          </label>
-          <input
-            value={source}
-            onChange={(e) => setSource(e.target.value)}
-            placeholder="e.g. LinkedIn, ZoomInfo"
-            className={tokens.input.base}
-          />
+          <FormField label="Source" htmlFor="signal-source">
+            <Input
+              id="signal-source"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              placeholder="e.g. LinkedIn, ZoomInfo"
+            />
+          </FormField>
         </div>
         <Button
           type="submit"
@@ -829,53 +872,6 @@ function AddSignalForm({
           Add
         </Button>
       </form>
-    </div>
-  );
-}
-
-function Field({
-  label,
-  value,
-}: {
-  label: string;
-  value?: ReactNode;
-}) {
-  return (
-    <div>
-      <dt className="text-gray-500">{label}</dt>
-      <dd className="text-gray-900 mt-0.5">{value ?? "—"}</dd>
-    </div>
-  );
-}
-
-function FormField({
-  label,
-  name,
-  defaultValue,
-  type = "text",
-  required,
-  placeholder,
-}: {
-  label: string;
-  name: string;
-  defaultValue?: string;
-  type?: string;
-  required?: boolean;
-  placeholder?: string;
-}) {
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
-        {label}
-      </label>
-      <input
-        name={name}
-        type={type}
-        defaultValue={defaultValue}
-        required={required}
-        placeholder={placeholder}
-        className={tokens.input.base}
-      />
     </div>
   );
 }

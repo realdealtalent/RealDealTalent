@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/button";
-import { tokens } from "@/components/design-tokens";
+import { FormField, FormMessage, Input, Select } from "@/components/forms";
 
 type Props = {
   onClose: () => void;
@@ -67,101 +67,58 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+            <FormMessage type="error">
               {error}
-            </div>
+            </FormMessage>
           )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Company Name *
-            </label>
-            <input
-              name="name"
-              required
-              className={tokens.input.base}
-            />
-          </div>
+          <FormField label="Company Name *" htmlFor="company-name">
+            <Input id="company-name" name="name" required />
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Domain *
-            </label>
-            <input
+          <FormField label="Domain *" htmlFor="company-domain">
+            <Input
+              id="company-domain"
               name="domain"
               required
               placeholder="example.com"
-              className={tokens.input.base}
             />
-          </div>
+          </FormField>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                HQ Country
-              </label>
-              <input
-                name="hqCountry"
-                className={tokens.input.base}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                HQ State
-              </label>
-              <input
-                name="hqState"
-                className={tokens.input.base}
-              />
-            </div>
+            <FormField label="HQ Country" htmlFor="company-hq-country">
+              <Input id="company-hq-country" name="hqCountry" />
+            </FormField>
+            <FormField label="HQ State" htmlFor="company-hq-state">
+              <Input id="company-hq-state" name="hqState" />
+            </FormField>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Employee Band
-            </label>
-            <select
-              name="employeeBand"
-              className={tokens.input.base}
-            >
+          <FormField label="Employee Band" htmlFor="company-employee-band">
+            <Select id="company-employee-band" name="employeeBand">
               <option value="">Select…</option>
               <option value="<25">&lt;25</option>
               <option value="25-100">25-100</option>
               <option value="100-300">100-300</option>
               <option value="300+">300+</option>
-            </select>
-          </div>
+            </Select>
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Industry
-            </label>
-            <input
+          <FormField label="Industry" htmlFor="company-industry">
+            <Input
+              id="company-industry"
               name="industry"
               placeholder="Manufacturing, Logistics"
-              className={tokens.input.base}
             />
             <p className="text-xs text-gray-400 mt-1">Comma-separated</p>
-          </div>
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              LinkedIn URL
-            </label>
-            <input
-              name="linkedinUrl"
-              className={tokens.input.base}
-            />
-          </div>
+          <FormField label="LinkedIn URL" htmlFor="company-linkedin-url">
+            <Input id="company-linkedin-url" name="linkedinUrl" />
+          </FormField>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Source
-            </label>
-            <select
-              name="source"
-              className={tokens.input.base}
-            >
+          <FormField label="Source" htmlFor="company-source">
+            <Select id="company-source" name="source">
               <option value="">Select…</option>
               <option value="manual">Manual</option>
               <option value="event_scrape">Event Scrape</option>
@@ -169,8 +126,8 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
               <option value="linkedin">LinkedIn</option>
               <option value="csv">CSV Import</option>
               <option value="referral">Referral</option>
-            </select>
-          </div>
+            </Select>
+          </FormField>
 
           <div className="flex justify-end gap-3 pt-2">
             <Button
