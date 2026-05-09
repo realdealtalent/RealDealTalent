@@ -3,21 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import type { CompanyStatus } from "@/db/schema";
+import { Pill } from "@/components/pill";
+import { STATUSES } from "@/lib/pipeline-vocab";
 import AddCompanyModal from "./add-company-modal";
-
-const PIPELINE_STATUSES = [
-  { key: "prospect", label: "Prospect" },
-  { key: "qualified", label: "Qualified" },
-  { key: "outreach", label: "Outreach" },
-  { key: "cooldown", label: "Cooldown" },
-  { key: "lead", label: "Lead" },
-  { key: "hot_lead", label: "Hot Lead" },
-  { key: "meeting_booked", label: "Meeting Booked" },
-  { key: "meeting_held", label: "Meeting Held" },
-  { key: "proposal_sent", label: "Proposal Sent" },
-  { key: "signed", label: "Signed" },
-  { key: "rejected", label: "Rejected" },
-] as const;
 
 type Company = {
   id: string;
@@ -25,7 +14,7 @@ type Company = {
   domain: string;
   employeeBand: string | null;
   currentScore: number;
-  status: string;
+  status: CompanyStatus;
 };
 
 export default function PipelineBoard() {
@@ -46,9 +35,9 @@ export default function PipelineBoard() {
     fetchCompanies();
   }, []);
 
-  const grouped = PIPELINE_STATUSES.map((s) => ({
-    ...s,
-    companies: companies.filter((c) => c.status === s.key),
+  const grouped = STATUSES.map((status) => ({
+    status,
+    companies: companies.filter((c) => c.status === status),
   }));
 
   return (
@@ -82,14 +71,12 @@ export default function PipelineBoard() {
           <div className="flex gap-4 p-4 h-full min-w-max">
             {grouped.map((col) => (
               <div
-                key={col.key}
+                key={col.status}
                 className="w-64 shrink-0 flex flex-col bg-gray-100 rounded-lg"
               >
                 <div className="px-3 py-2 border-b border-gray-200">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-semibold text-gray-700">
-                      {col.label}
-                    </h2>
+                    <Pill stage={col.status} />
                     <span className="text-xs text-gray-400 bg-gray-200 rounded-full px-2 py-0.5">
                       {col.companies.length}
                     </span>
@@ -115,6 +102,9 @@ export default function PipelineBoard() {
                         <p className="text-xs text-gray-500 truncate">
                           {company.domain}
                         </p>
+                        <div className="mt-2">
+                          <Pill stage={company.status} className="px-2 py-0.5" />
+                        </div>
                         <div className="mt-2 flex items-center justify-between">
                           {company.employeeBand && (
                             <span className="text-xs text-gray-400">

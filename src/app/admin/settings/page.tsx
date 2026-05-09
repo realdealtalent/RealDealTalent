@@ -2,17 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-
-const SIGNAL_TYPES = [
-  { value: "open_sales_role", label: "Open Sales Role" },
-  { value: "open_ops_role", label: "Open Ops Role" },
-  { value: "recent_funding", label: "Recent Funding" },
-  { value: "leadership_change", label: "Leadership Change" },
-  { value: "pe_owned", label: "PE Owned" },
-  { value: "multi_site_expansion", label: "Multi-Site Expansion" },
-  { value: "certification_added", label: "Certification Added" },
-  { value: "event_exhibitor", label: "Event Exhibitor" },
-];
+import type { SignalType } from "@/db/schema";
+import { SIGNAL_LABELS, SIGNAL_TYPES } from "@/lib/pipeline-vocab";
 
 const GEOGRAPHY_OPTIONS = [
   "US", "CA", "GB", "AU", "DE", "FR", "NL", "IE", "SG", "IN",
@@ -141,14 +132,14 @@ export default function SettingsPage() {
     setScoringSaving(false);
   };
 
-  const setWeight = (signalType: string, value: number) => {
+  const setWeight = (signalType: SignalType, value: number) => {
     setScoring((prev) => ({
       ...prev,
       weights: { ...prev.weights, [signalType]: value },
     }));
   };
 
-  const toggleSignal = (signalType: string) => {
+  const toggleSignal = (signalType: SignalType) => {
     setScoring((prev) => ({
       ...prev,
       weights: {
@@ -329,14 +320,14 @@ export default function SettingsPage() {
 
         <div className="space-y-3 mb-6">
           {SIGNAL_TYPES.map((signal) => {
-            const weight = scoring.weights[signal.value] ?? 0;
+            const weight = scoring.weights[signal] ?? 0;
             const enabled = weight > 0;
 
             return (
-              <div key={signal.value} className="flex items-center gap-3">
+              <div key={signal} className="flex items-center gap-3">
                 <button
                   type="button"
-                  onClick={() => toggleSignal(signal.value)}
+                  onClick={() => toggleSignal(signal)}
                   className={`w-10 h-6 rounded-full relative transition-colors ${
                     enabled ? "bg-blue-600" : "bg-gray-300"
                   }`}
@@ -347,13 +338,13 @@ export default function SettingsPage() {
                     }`}
                   />
                 </button>
-                <span className="text-sm text-gray-700 w-44">{signal.label}</span>
+                <span className="text-sm text-gray-700 w-44">{SIGNAL_LABELS[signal]}</span>
                 <input
                   type="range"
                   min={0}
                   max={50}
                   value={weight}
-                  onChange={(e) => setWeight(signal.value, Number(e.target.value))}
+                  onChange={(e) => setWeight(signal, Number(e.target.value))}
                   className="flex-1"
                 />
                 <span className="text-sm font-mono text-gray-600 w-8 text-right">

@@ -5,6 +5,8 @@ export type ValidationResult =
   | { valid: true }
   | { valid: false; error: string };
 
+export const SERVER_PIPELINE_STATUSES = [...companyStatus] as const satisfies readonly CompanyStatus[];
+
 /**
  * Pure validation rules for pipeline transitions — no DB access.
  */
@@ -14,7 +16,7 @@ export function validateTransition(
   opts: { lostReasonSlug?: string; note?: string } = {},
 ): ValidationResult {
   // Target must be a known status
-  if (!companyStatus.includes(toStatus)) {
+  if (!SERVER_PIPELINE_STATUSES.includes(toStatus)) {
     return { valid: false, error: `Invalid status: ${toStatus}` };
   }
 

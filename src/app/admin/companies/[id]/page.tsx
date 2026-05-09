@@ -1,35 +1,16 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-
-const STATUSES = [
-  "prospect",
-  "qualified",
-  "outreach",
-  "cooldown",
-  "lead",
-  "hot_lead",
-  "meeting_booked",
-  "meeting_held",
-  "proposal_sent",
-  "signed",
-  "rejected",
-];
-
-const STATUS_LABELS: Record<string, string> = {
-  prospect: "Prospect",
-  qualified: "Qualified",
-  outreach: "Outreach",
-  cooldown: "Cooldown",
-  lead: "Lead",
-  hot_lead: "Hot Lead",
-  meeting_booked: "Meeting Booked",
-  meeting_held: "Meeting Held",
-  proposal_sent: "Proposal Sent",
-  signed: "Signed",
-  rejected: "Rejected",
-};
+import type { CompanyStatus, SignalType } from "@/db/schema";
+import { Pill } from "@/components/pill";
+import {
+  SIGNAL_LABELS,
+  SIGNAL_TYPES,
+  STATUSES,
+  STATUS_LABELS,
+} from "@/lib/pipeline-vocab";
 
 type Company = {
   id: string;
@@ -43,7 +24,7 @@ type Company = {
   revenueBand: string | null;
   linkedinUrl: string | null;
   currentScore: number;
-  status: string;
+  status: CompanyStatus;
   statusChangedAt: string | null;
   cooldownUntil: string | null;
   lostReason: string | null;
@@ -63,8 +44,8 @@ type LostReason = {
 
 type HistoryEntry = {
   id: string;
-  fromStage: string | null;
-  toStage: string;
+  fromStage: CompanyStatus | null;
+  toStage: CompanyStatus;
   changedAt: string;
   changedBy: string | null;
   note: string | null;
@@ -73,7 +54,7 @@ type HistoryEntry = {
 type ScoreBreakdown = {
   signals: Array<{
     id: string;
-    signalType: string;
+    signalType: SignalType;
     weight: number;
     points: number;
     source: string | null;
@@ -90,21 +71,6 @@ type ScoreBreakdown = {
   meetsThreshold: boolean;
   qualifies: boolean;
 };
-
-const SIGNAL_TYPES = [
-  { value: "open_sales_role", label: "Open Sales Role" },
-  { value: "open_ops_role", label: "Open Ops Role" },
-  { value: "recent_funding", label: "Recent Funding" },
-  { value: "leadership_change", label: "Leadership Change" },
-  { value: "pe_owned", label: "PE Owned" },
-  { value: "multi_site_expansion", label: "Multi-Site Expansion" },
-  { value: "certification_added", label: "Certification Added" },
-  { value: "event_exhibitor", label: "Event Exhibitor" },
-];
-
-const SIGNAL_LABELS: Record<string, string> = Object.fromEntries(
-  SIGNAL_TYPES.map((s) => [s.value, s.label]),
-);
 
 export default function CompanyDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -148,7 +114,7 @@ export default function CompanyDetailPage() {
   }, [id, fetchCompany, fetchHistory]);
 
   const handleTransition = async (
-    newStatus: string,
+    newStatus: CompanyStatus,
     opts?: { lostReasonSlug?: string; note?: string },
   ) => {
     setError("");
@@ -170,7 +136,7 @@ export default function CompanyDetailPage() {
 
     const updated = await res.json();
     setCompany(updated);
-    setSuccess(`Status changed to ${STATUS_LABELS[newStatus] || newStatus}`);
+    setSuccess(`Status changed to ${STATUS_LABELS[newStatus]}`);
     setTransitioning(false);
     fetchHistory();
     setTimeout(() => setSuccess(""), 3000);
@@ -223,7 +189,7 @@ export default function CompanyDetailPage() {
     setTimeout(() => setSuccess(""), 3000);
   };
 
-  const handleAddSignal = async (signalType: string, source: string) => {
+  const handleAddSignal = async (signalType: SignalType, source: string) => {
     setError("");
     setSuccess("");
 
@@ -288,9 +254,7 @@ export default function CompanyDetailPage() {
           <p className="text-gray-500">{company.domain}</p>
         </div>
         <div className="flex items-center gap-3">
-          <span className="inline-block rounded-full bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1">
-            {STATUS_LABELS[company.status] || company.status}
-          </span>
+          <Pill stage={company.status} />
           <span className="text-sm font-mono text-blue-600">
             {company.currentScore} pts
           </span>
@@ -381,7 +345,7 @@ export default function CompanyDetailPage() {
             <Field label="Owner" value={company.owner} />
             <Field
               label="Status"
-              value={STATUS_LABELS[company.status] || company.status}
+              value={<Pill stage={company.status} />}
             />
             {company.status === "rejected" && (
               <>
@@ -558,7 +522,7 @@ export default function CompanyDetailPage() {
                 <tbody>
                   {company.scoreBreakdown.signals.map((s) => (
                     <tr key={s.id} className="border-b border-gray-100">
-                      <td className="py-2 text-gray-900">{SIGNAL_LABELS[s.signalType] || s.signalType}</td>
+                      <td className="py-2 text-gray-900">{SIGNAL_LABELS[s.signalType]}</td>
                       <td className="py-2 font-mono text-blue-600">+{s.points}</td>
                       <td className="py-2 text-gray-500">{s.source || "—"}</td>
                       <td className="py-2 text-gray-400 text-xs">{new Date(s.observedAt).toLocaleDateString()}</td>
@@ -611,13 +575,11 @@ export default function CompanyDetailPage() {
                   <div className="flex items-center gap-2">
                     <span className="text-gray-500">
                       {entry.fromStage
-                        ? STATUS_LABELS[entry.fromStage] || entry.fromStage
+                        ? STATUS_LABELS[entry.fromStage]
                         : "—"}
                     </span>
                     <span className="text-gray-400">&rarr;</span>
-                    <span className="font-medium text-gray-900">
-                      {STATUS_LABELS[entry.toStage] || entry.toStage}
-                    </span>
+                    <Pill stage={entry.toStage} className="px-2 py-0.5" />
                   </div>
                   <span className="text-xs text-gray-400">
                     {new Date(entry.changedAt).toLocaleString()}
@@ -653,7 +615,7 @@ export default function CompanyDetailPage() {
 }
 
 /** Determine valid next statuses based on current status. */
-function getNextStatuses(current: string): string[] {
+function getNextStatuses(current: CompanyStatus): CompanyStatus[] {
   // All statuses except the current one are valid transition targets.
   // Special cases handled by the backend validation:
   //   - rejected requires lost reason
@@ -741,9 +703,9 @@ function RejectModal({
 function AddSignalForm({
   onAdd,
 }: {
-  onAdd: (signalType: string, source: string) => void;
+  onAdd: (signalType: SignalType, source: string) => void;
 }) {
-  const [signalType, setSignalType] = useState("");
+  const [signalType, setSignalType] = useState<SignalType | "">("");
   const [source, setSource] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -767,13 +729,13 @@ function AddSignalForm({
           </label>
           <select
             value={signalType}
-            onChange={(e) => setSignalType(e.target.value)}
+            onChange={(e) => setSignalType(e.target.value as SignalType | "")}
             className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
           >
             <option value="">Select signal…</option>
             {SIGNAL_TYPES.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+              <option key={s} value={s}>
+                {SIGNAL_LABELS[s]}
               </option>
             ))}
           </select>
@@ -791,7 +753,7 @@ function AddSignalForm({
         </div>
         <button
           type="submit"
-          disabled={!signalType || submitting}
+          disabled={signalType === "" || submitting}
           className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
         >
           {submitting ? "Adding…" : "Add"}
@@ -801,11 +763,17 @@ function AddSignalForm({
   );
 }
 
-function Field({ label, value }: { label: string; value?: string | null }) {
+function Field({
+  label,
+  value,
+}: {
+  label: string;
+  value?: ReactNode;
+}) {
   return (
     <div>
       <dt className="text-gray-500">{label}</dt>
-      <dd className="text-gray-900 mt-0.5">{value || "—"}</dd>
+      <dd className="text-gray-900 mt-0.5">{value ?? "—"}</dd>
     </div>
   );
 }
