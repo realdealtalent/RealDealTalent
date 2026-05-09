@@ -59,7 +59,7 @@ export function LandingPage() {
       {/* NAVIGATION */}
       <nav id="navbar">
         <div className="nav-inner">
-          <a href="#" className="nav-logo">
+          <a href="/admin/login" className="nav-logo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO_SRC} alt="Real Deal Talent" className="nav-logo-img" />
           </a>
