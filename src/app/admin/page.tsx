@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { CompanyStatus } from "@/db/schema";
+import { Button } from "@/components/button";
+import { tokens } from "@/components/design-tokens";
 import { Pill } from "@/components/pill";
 import { STATUSES } from "@/lib/pipeline-vocab";
 import AddCompanyModal from "./add-company-modal";
@@ -49,16 +51,15 @@ export default function PipelineBoard() {
         <div className="flex items-center gap-3">
           <Link
             href="/admin/settings"
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className={`${tokens.button.base} ${tokens.button.secondary} min-h-11 px-4 py-2 text-sm`}
           >
             Settings
           </Link>
-          <button
+          <Button
             onClick={() => setShowAddModal(true)}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
           >
             + Add Company
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -89,12 +90,14 @@ export default function PipelineBoard() {
                     </p>
                   ) : (
                     col.companies.map((company) => (
-                      <button
+                      <Button
                         key={company.id}
                         onClick={() =>
                           router.push(`/admin/companies/${company.id}`)
                         }
-                        className="w-full text-left bg-white rounded-md border border-gray-200 p-3 hover:shadow-md transition-shadow cursor-pointer"
+                        variant="ghost"
+                        size="sm"
+                        className="block h-auto w-full rounded-md border border-gray-200 bg-white p-3 text-left transition-shadow hover:bg-white hover:shadow-md"
                       >
                         <p className="text-sm font-medium text-gray-900 truncate">
                           {company.name}
@@ -115,7 +118,7 @@ export default function PipelineBoard() {
                             {company.currentScore} pts
                           </span>
                         </div>
-                      </button>
+                      </Button>
                     ))
                   )}
                 </div>

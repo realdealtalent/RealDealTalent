@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/button";
+import { tokens } from "@/components/design-tokens";
 
 type Props = {
   onClose: () => void;
@@ -52,12 +54,14 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
       <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <h2 className="text-lg font-semibold text-gray-900">Add Company</h2>
-          <button
+          <Button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+            variant="ghost"
+            size="sm"
+            className="min-h-0 px-2 py-1 text-xl leading-none text-gray-400 hover:bg-transparent hover:text-gray-600"
           >
             &times;
-          </button>
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -74,7 +78,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             <input
               name="name"
               required
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
           </div>
 
@@ -86,7 +90,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
               name="domain"
               required
               placeholder="example.com"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
           </div>
 
@@ -97,7 +101,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
               </label>
               <input
                 name="hqCountry"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                className={tokens.input.base}
               />
             </div>
             <div>
@@ -106,7 +110,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
               </label>
               <input
                 name="hqState"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                className={tokens.input.base}
               />
             </div>
           </div>
@@ -117,7 +121,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             </label>
             <select
               name="employeeBand"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             >
               <option value="">Select…</option>
               <option value="<25">&lt;25</option>
@@ -134,7 +138,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             <input
               name="industry"
               placeholder="Manufacturing, Logistics"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
             <p className="text-xs text-gray-400 mt-1">Comma-separated</p>
           </div>
@@ -145,7 +149,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             </label>
             <input
               name="linkedinUrl"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
           </div>
 
@@ -155,7 +159,7 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
             </label>
             <select
               name="source"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             >
               <option value="">Select…</option>
               <option value="manual">Manual</option>
@@ -168,20 +172,19 @@ export default function AddCompanyModal({ onClose, onCreated }: Props) {
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
-            <button
+            <Button
               type="button"
               onClick={onClose}
-              className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              variant="secondary"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              disabled={submitting}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+              loading={submitting}
             >
-              {submitting ? "Creating…" : "Create Company"}
-            </button>
+              Create Company
+            </Button>
           </div>
         </form>
       </div>

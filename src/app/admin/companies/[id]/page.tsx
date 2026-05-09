@@ -3,6 +3,8 @@
 import type { ReactNode } from "react";
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { Button } from "@/components/button";
+import { tokens } from "@/components/design-tokens";
 import type { CompanyStatus, SignalType } from "@/db/schema";
 import { Pill } from "@/components/pill";
 import {
@@ -226,12 +228,14 @@ export default function CompanyDetailPage() {
     return (
       <main className="max-w-3xl mx-auto px-4 py-12">
         <p className="text-gray-500">Company not found.</p>
-        <button
+        <Button
           onClick={() => router.push("/admin")}
-          className="mt-4 text-sm text-blue-600 hover:underline"
+          variant="ghost"
+          size="sm"
+          className="mt-4 px-0 text-blue-600 hover:bg-transparent hover:text-blue-700"
         >
           Back to Pipeline
-        </button>
+        </Button>
       </main>
     );
   }
@@ -241,12 +245,14 @@ export default function CompanyDetailPage() {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-8">
-      <button
+      <Button
         onClick={() => router.push("/admin")}
-        className="text-sm text-blue-600 hover:underline mb-6 inline-block"
+        variant="ghost"
+        size="sm"
+        className="mb-6 px-0 text-blue-600 hover:bg-transparent hover:text-blue-700"
       >
         &larr; Back to Pipeline
-      </button>
+      </Button>
 
       <div className="flex items-start justify-between mb-6">
         <div>
@@ -280,34 +286,34 @@ export default function CompanyDetailPage() {
           </h2>
           <div className="flex flex-wrap gap-2">
             {company.status === "rejected" ? (
-              <button
+              <Button
                 onClick={() => handleTransition("qualified")}
-                disabled={transitioning}
-                className="rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-50"
+                loading={transitioning}
               >
-                {transitioning ? "Reactivating…" : "Reactivate to Qualified"}
-              </button>
+                Reactivate to Qualified
+              </Button>
             ) : (
               <>
                 {nextStatuses
                   .filter((s) => s !== "rejected")
                   .map((s) => (
-                    <button
+                    <Button
                       key={s}
                       onClick={() => handleTransition(s)}
-                      disabled={transitioning}
-                      className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+                      loading={transitioning}
+                      size="sm"
                     >
-                      {transitioning ? "…" : STATUS_LABELS[s]}
-                    </button>
+                      {STATUS_LABELS[s]}
+                    </Button>
                   ))}
-                <button
+                <Button
                   onClick={() => setShowRejectModal(true)}
                   disabled={transitioning}
-                  className="rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+                  variant="danger"
+                  size="sm"
                 >
                   Reject
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -317,12 +323,12 @@ export default function CompanyDetailPage() {
       {!editing ? (
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="flex justify-end mb-4">
-            <button
+            <Button
               onClick={() => setEditing(true)}
-              className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              variant="secondary"
             >
               Edit
-            </button>
+            </Button>
           </div>
 
           <dl className="grid grid-cols-2 gap-x-6 gap-y-4 text-sm">
@@ -406,7 +412,7 @@ export default function CompanyDetailPage() {
               <select
                 name="employeeBand"
                 defaultValue={company.employeeBand ?? ""}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                className={tokens.input.base}
               >
                 <option value="">Select…</option>
                 <option value="<25">&lt;25</option>
@@ -438,7 +444,7 @@ export default function CompanyDetailPage() {
               <select
                 name="source"
                 defaultValue={company.source ?? ""}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                className={tokens.input.base}
               >
                 <option value="">Select…</option>
                 <option value="manual">Manual</option>
@@ -457,23 +463,22 @@ export default function CompanyDetailPage() {
           </div>
 
           <div className="flex justify-end gap-3 pt-2">
-            <button
+            <Button
               type="button"
               onClick={() => {
                 setEditing(false);
                 setError("");
               }}
-              className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              variant="secondary"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              disabled={saving}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+              loading={saving}
             >
-              {saving ? "Saving…" : "Save Changes"}
-            </button>
+              Save Changes
+            </Button>
           </div>
         </form>
       )}
@@ -648,11 +653,11 @@ function RejectModal({
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Lost Reason *
             </label>
-            <select
-              value={selectedSlug}
-              onChange={(e) => setSelectedSlug(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
-            >
+          <select
+            value={selectedSlug}
+            onChange={(e) => setSelectedSlug(e.target.value)}
+            className={tokens.input.base}
+          >
               <option value="">Select a reason…</option>
               {lostReasons.map((r) => (
                 <option key={r.slug} value={r.slug}>
@@ -669,7 +674,7 @@ function RejectModal({
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows={3}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
               placeholder={
                 requiresNote ? "Required for this reason" : "Optional"
               }
@@ -677,23 +682,23 @@ function RejectModal({
           </div>
         </div>
         <div className="flex justify-end gap-3 mt-6">
-          <button
+          <Button
             type="button"
             onClick={onCancel}
-            className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            variant="secondary"
           >
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             disabled={
               !selectedSlug || (requiresNote && !note.trim())
             }
             onClick={() => onConfirm(selectedSlug, note || undefined)}
-            className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50"
+            variant="danger"
           >
             Reject
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -730,7 +735,7 @@ function AddSignalForm({
           <select
             value={signalType}
             onChange={(e) => setSignalType(e.target.value as SignalType | "")}
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            className={tokens.input.base}
           >
             <option value="">Select signal…</option>
             {SIGNAL_TYPES.map((s) => (
@@ -748,16 +753,16 @@ function AddSignalForm({
             value={source}
             onChange={(e) => setSource(e.target.value)}
             placeholder="e.g. LinkedIn, ZoomInfo"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            className={tokens.input.base}
           />
         </div>
-        <button
+        <Button
           type="submit"
-          disabled={signalType === "" || submitting}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+          loading={submitting}
+          disabled={signalType === ""}
         >
-          {submitting ? "Adding…" : "Add"}
-        </button>
+          Add
+        </Button>
       </form>
     </div>
   );
@@ -804,7 +809,7 @@ function FormField({
         defaultValue={defaultValue}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+        className={tokens.input.base}
       />
     </div>
   );

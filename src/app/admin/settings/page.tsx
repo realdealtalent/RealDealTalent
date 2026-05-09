@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/button";
+import { tokens } from "@/components/design-tokens";
 import type { SignalType } from "@/db/schema";
 import { SIGNAL_LABELS, SIGNAL_TYPES } from "@/lib/pipeline-vocab";
 
@@ -227,12 +229,14 @@ export default function SettingsPage() {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-8">
-      <button
+      <Button
         onClick={() => router.push("/admin")}
-        className="text-sm text-blue-600 hover:underline mb-6 inline-block"
+        variant="ghost"
+        size="sm"
+        className="mb-6 px-0 text-blue-600 hover:bg-transparent hover:text-blue-700"
       >
         &larr; Back to Pipeline
-      </button>
+      </Button>
 
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Settings</h1>
 
@@ -255,7 +259,7 @@ export default function SettingsPage() {
                 setFilters((prev) => ({ ...prev, headcount_min: Number(e.target.value) }))
               }
               min={0}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
           </div>
           <div>
@@ -269,7 +273,7 @@ export default function SettingsPage() {
                 setFilters((prev) => ({ ...prev, headcount_max: Number(e.target.value) }))
               }
               min={0}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+              className={tokens.input.base}
             />
           </div>
         </div>
@@ -280,18 +284,20 @@ export default function SettingsPage() {
           </label>
           <div className="flex flex-wrap gap-2">
             {GEOGRAPHY_OPTIONS.map((code) => (
-              <button
+              <Button
                 key={code}
                 type="button"
                 onClick={() => toggleGeography(code)}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium border ${
+                variant={filters.geography.includes(code) ? "primary" : "secondary"}
+                size="sm"
+                className={
                   filters.geography.includes(code)
-                    ? "bg-blue-600 text-white border-blue-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                }`}
+                    ? "border-blue-600"
+                    : undefined
+                }
               >
                 {code}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -301,13 +307,12 @@ export default function SettingsPage() {
         )}
 
         <div className="flex justify-end">
-          <button
+          <Button
             onClick={saveFilters}
-            disabled={filtersSaving}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            loading={filtersSaving}
           >
-            {filtersSaving ? "Saving…" : "Save Filters"}
-          </button>
+            Save Filters
+          </Button>
         </div>
       </section>
 
@@ -325,10 +330,13 @@ export default function SettingsPage() {
 
             return (
               <div key={signal} className="flex items-center gap-3">
-                <button
+                <Button
                   type="button"
                   onClick={() => toggleSignal(signal)}
-                  className={`w-10 h-6 rounded-full relative transition-colors ${
+                  variant="ghost"
+                  size="sm"
+                  aria-pressed={enabled}
+                  className={`relative min-h-0 w-10 rounded-full px-0 py-0 transition-colors ${
                     enabled ? "bg-blue-600" : "bg-gray-300"
                   }`}
                 >
@@ -337,7 +345,7 @@ export default function SettingsPage() {
                       enabled ? "left-4" : "left-0.5"
                     }`}
                   />
-                </button>
+                </Button>
                 <span className="text-sm text-gray-700 w-44">{SIGNAL_LABELS[signal]}</span>
                 <input
                   type="range"
@@ -377,8 +385,8 @@ export default function SettingsPage() {
                 setScoring((prev) => ({ ...prev, threshold: Number(e.target.value) }))
               }
               min={0}
-              className="w-20 rounded-md border border-gray-300 px-3 py-2 text-sm font-mono"
-            />
+                className={`${tokens.input.base} w-20 font-mono`}
+              />
           </div>
         </div>
 
@@ -387,13 +395,12 @@ export default function SettingsPage() {
         )}
 
         <div className="flex justify-end">
-          <button
+          <Button
             onClick={saveScoring}
-            disabled={scoringSaving}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+            loading={scoringSaving}
           >
-            {scoringSaving ? "Saving…" : "Save Scoring"}
-          </button>
+            Save Scoring
+          </Button>
         </div>
       </section>
 
@@ -438,7 +445,7 @@ export default function SettingsPage() {
                   }
                 }}
                 placeholder="e.g. Acquired by competitor"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                className={tokens.input.base}
               />
             </div>
             <div className="flex-1">
@@ -447,16 +454,16 @@ export default function SettingsPage() {
                 value={newReasonSlug}
                 onChange={(e) => setNewReasonSlug(e.target.value)}
                 placeholder="e.g. acquired_by_competitor"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-mono"
+                className={`${tokens.input.base} font-mono`}
               />
             </div>
-            <button
+            <Button
               onClick={addReason}
-              disabled={addingReason || !newReasonLabel || !newReasonSlug}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+              loading={addingReason}
+              disabled={!newReasonLabel || !newReasonSlug}
             >
-              {addingReason ? "Adding…" : "Add"}
-            </button>
+              Add
+            </Button>
           </div>
         </div>
       </section>
@@ -501,22 +508,26 @@ function LostReasonRow({
       }`}
     >
       <div className="flex flex-col gap-0.5">
-        <button
+        <Button
           type="button"
           onClick={() => onMove("up")}
           disabled={isFirst}
-          className="text-xs text-gray-400 hover:text-gray-600 disabled:opacity-30"
+          variant="ghost"
+          size="sm"
+          className="min-h-0 px-1 py-0 text-xs text-gray-400 hover:bg-transparent hover:text-gray-600"
         >
           ▲
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={() => onMove("down")}
           disabled={isLast}
-          className="text-xs text-gray-400 hover:text-gray-600 disabled:opacity-30"
+          variant="ghost"
+          size="sm"
+          className="min-h-0 px-1 py-0 text-xs text-gray-400 hover:bg-transparent hover:text-gray-600"
         >
           ▼
-        </button>
+        </Button>
       </div>
 
       {editing ? (
@@ -524,46 +535,58 @@ function LostReasonRow({
           <input
             value={label}
             onChange={(e) => setLabel(e.target.value)}
-            className="flex-1 rounded-md border border-gray-300 px-2 py-1 text-sm"
+            className={`${tokens.input.base} flex-1 px-2 py-1`}
           />
           <input
             value={slug}
             onChange={(e) => setSlug(e.target.value)}
-            className="w-40 rounded-md border border-gray-300 px-2 py-1 text-sm font-mono"
+            className={`${tokens.input.base} w-40 px-2 py-1 font-mono`}
           />
-          <button
+          <Button
             onClick={save}
-            className="text-xs text-blue-600 hover:underline"
+            variant="ghost"
+            size="sm"
+            className="min-h-0 px-1 py-0 text-xs text-blue-600 hover:bg-transparent hover:text-blue-700"
           >
             Save
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={cancel}
-            className="text-xs text-gray-500 hover:underline"
+            variant="ghost"
+            size="sm"
+            className="min-h-0 px-1 py-0 text-xs text-gray-500 hover:bg-transparent hover:text-gray-700"
           >
             Cancel
-          </button>
+          </Button>
         </>
       ) : (
         <>
           <span className="flex-1 text-gray-900">{reason.label}</span>
           <span className="text-xs font-mono text-gray-400">{reason.slug}</span>
-          <button
+          <Button
             onClick={() => setEditing(true)}
-            className="text-xs text-blue-600 hover:underline"
+            variant="ghost"
+            size="sm"
+            className="min-h-0 px-1 py-0 text-xs text-blue-600 hover:bg-transparent hover:text-blue-700"
           >
             Edit
-          </button>
+          </Button>
         </>
       )}
 
-      <button
+      <Button
         type="button"
         onClick={() => onUpdate({ active: !reason.active })}
-        className={`text-xs ${reason.active ? "text-red-600 hover:underline" : "text-green-600 hover:underline"}`}
+        variant="ghost"
+        size="sm"
+        className={`min-h-0 px-1 py-0 text-xs ${
+          reason.active
+            ? "text-red-600 hover:bg-transparent hover:text-red-700"
+            : "text-green-600 hover:bg-transparent hover:text-green-700"
+        }`}
       >
         {reason.active ? "Deactivate" : "Activate"}
-      </button>
+      </Button>
     </div>
   );
 }

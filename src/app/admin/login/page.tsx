@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/button";
+import { tokens } from "@/components/design-tokens";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -52,7 +54,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={tokens.input.base}
           />
         </div>
         <div>
@@ -64,16 +66,16 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={tokens.input.base}
           />
         </div>
-        <button
+        <Button
           type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white rounded py-2 text-sm font-medium hover:bg-blue-700 disabled:opacity-50"
+          loading={loading}
+          className="w-full"
         >
-          {loading ? "Signing in..." : "Sign in"}
-        </button>
+          Sign in
+        </Button>
       </form>
     </div>
   );
