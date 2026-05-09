@@ -7,6 +7,7 @@ import type { CompanyStatus } from "@/db/schema";
 import { Button } from "@/components/button";
 import { tokens } from "@/components/design-tokens";
 import { Pill } from "@/components/pill";
+import { Skeleton } from "@/components/skeleton";
 import { STATUSES } from "@/lib/pipeline-vocab";
 import AddCompanyModal from "./add-company-modal";
 
@@ -64,9 +65,7 @@ export default function PipelineBoard() {
       </header>
 
       {loading ? (
-        <div className="flex-1 flex items-center justify-center text-gray-500">
-          Loading…
-        </div>
+        <PipelineBoardSkeleton />
       ) : (
         <div className="flex-1 overflow-x-auto">
           <div className="flex gap-4 p-4 h-full min-w-max">
@@ -138,5 +137,43 @@ export default function PipelineBoard() {
         />
       )}
     </main>
+  );
+}
+
+function PipelineBoardSkeleton() {
+  return (
+    <div className="flex-1 overflow-x-auto">
+      <div className="flex h-full min-w-max gap-4 p-4">
+        {STATUSES.map((status) => (
+          <div
+            key={status}
+            className="flex w-64 shrink-0 flex-col rounded-lg bg-gray-100"
+          >
+            <div className="border-b border-gray-200 px-3 py-2">
+              <div className="flex items-center justify-between">
+                <Skeleton className="h-6 w-24 rounded-full" />
+                <Skeleton className="h-5 w-7 rounded-full" />
+              </div>
+            </div>
+            <div className="flex-1 space-y-2 overflow-y-auto p-2">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={`${status}-${index}`}
+                  className="rounded-md border border-gray-200 bg-white p-3"
+                >
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="mt-2 h-3 w-1/2" />
+                  <Skeleton className="mt-3 h-5 w-20 rounded-full" />
+                  <div className="mt-3 flex items-center justify-between">
+                    <Skeleton className="h-3 w-14" />
+                    <Skeleton className="h-3 w-12" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

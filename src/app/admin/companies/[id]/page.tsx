@@ -7,6 +7,7 @@ import { Button } from "@/components/button";
 import { tokens } from "@/components/design-tokens";
 import type { CompanyStatus, SignalType } from "@/db/schema";
 import { Pill } from "@/components/pill";
+import { Skeleton } from "@/components/skeleton";
 import {
   SIGNAL_LABELS,
   SIGNAL_TYPES,
@@ -217,11 +218,7 @@ export default function CompanyDetailPage() {
   };
 
   if (loading) {
-    return (
-      <main className="max-w-3xl mx-auto px-4 py-12 text-gray-500">
-        Loading…
-      </main>
-    );
+    return <CompanyDetailSkeleton />;
   }
 
   if (!company) {
@@ -615,6 +612,62 @@ export default function CompanyDetailPage() {
           onCancel={() => setShowRejectModal(false)}
         />
       )}
+    </main>
+  );
+}
+
+function CompanyDetailSkeleton() {
+  return (
+    <main className="mx-auto max-w-3xl px-4 py-8">
+      <Skeleton className="mb-6 h-5 w-32" />
+
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div className="flex-1">
+          <Skeleton className="h-8 w-56" />
+          <Skeleton className="mt-2 h-4 w-40" />
+        </div>
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-6 w-24 rounded-full" />
+          <Skeleton className="h-5 w-14" />
+        </div>
+      </div>
+
+      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4">
+        <Skeleton className="mb-3 h-4 w-28" />
+        <div className="flex flex-wrap gap-2">
+          <Skeleton className="h-9 w-36" />
+          <Skeleton className="h-9 w-28" />
+          <Skeleton className="h-9 w-24" />
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-gray-200 bg-white p-6">
+        <div className="mb-4 flex justify-end">
+          <Skeleton className="h-10 w-16" />
+        </div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <div key={index}>
+              <Skeleton className="mb-2 h-3 w-24" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-8 rounded-lg border border-gray-200 bg-white p-6">
+        <Skeleton className="mb-4 h-6 w-32" />
+        <div className="grid grid-cols-2 gap-3">
+          <Skeleton className="h-16 w-full" />
+          <Skeleton className="h-16 w-full" />
+        </div>
+        <Skeleton className="mt-6 h-4 w-28" />
+        <div className="mt-3 space-y-2">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton key={index} className="h-10 w-full" />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
