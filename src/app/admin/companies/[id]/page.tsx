@@ -7,7 +7,6 @@ import { Button } from "@/components/button";
 import {
   Field,
   FormField,
-  FormMessage,
   Input,
   Select,
   Textarea,
@@ -15,6 +14,7 @@ import {
 import type { CompanyStatus, SignalType } from "@/db/schema";
 import { Pill } from "@/components/pill";
 import { Skeleton } from "@/components/skeleton";
+import { Toast } from "@/components/toast";
 import {
   SIGNAL_LABELS,
   SIGNAL_TYPES,
@@ -149,7 +149,6 @@ export default function CompanyDetailPage() {
     setSuccess(`Status changed to ${STATUS_LABELS[newStatus]}`);
     setTransitioning(false);
     fetchHistory();
-    setTimeout(() => setSuccess(""), 3000);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -196,7 +195,6 @@ export default function CompanyDetailPage() {
     setEditing(false);
     setSuccess("Company updated");
     setSaving(false);
-    setTimeout(() => setSuccess(""), 3000);
   };
 
   const handleAddSignal = async (signalType: SignalType, source: string) => {
@@ -221,7 +219,6 @@ export default function CompanyDetailPage() {
     // Refetch to get updated score breakdown
     fetchCompany();
     fetchHistory();
-    setTimeout(() => setSuccess(""), 3000);
   };
 
   if (loading) {
@@ -271,15 +268,23 @@ export default function CompanyDetailPage() {
         </div>
       </div>
 
-      {success && (
-        <FormMessage type="success" className="mb-4">
-          {success}
-        </FormMessage>
-      )}
-      {error && (
-        <FormMessage type="error" className="mb-4">
-          {error}
-        </FormMessage>
+      {(success || error) && (
+        <div className="mb-4 flex flex-col gap-3">
+          {success ? (
+            <Toast
+              type="success"
+              message={success}
+              onDismiss={() => setSuccess("")}
+            />
+          ) : null}
+          {error ? (
+            <Toast
+              type="error"
+              message={error}
+              onDismiss={() => setError("")}
+            />
+          ) : null}
+        </div>
       )}
 
       {/* Status transition controls */}

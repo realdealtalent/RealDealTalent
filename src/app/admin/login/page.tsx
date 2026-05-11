@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { FormField, FormMessage, Input } from "@/components/forms";
+import { FormField, Input } from "@/components/forms";
+import { Toast } from "@/components/toast";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -43,9 +44,11 @@ export default function LoginPage() {
           Sign in
         </h1>
         {error && (
-          <FormMessage type="error" className="text-center">
-            {error}
-          </FormMessage>
+          <Toast
+            type="error"
+            message={error}
+            onDismiss={() => setError("")}
+          />
         )}
         <FormField label="Email" htmlFor="email">
           <Input

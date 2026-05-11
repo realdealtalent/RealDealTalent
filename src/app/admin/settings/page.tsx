@@ -3,8 +3,9 @@
 import { type ReactNode, useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { FormField, FormMessage, Input } from "@/components/forms";
+import { FormField, Input } from "@/components/forms";
 import { Skeleton } from "@/components/skeleton";
+import { Toast } from "@/components/toast";
 import type { SignalType } from "@/db/schema";
 import { SIGNAL_LABELS, SIGNAL_TYPES } from "@/lib/pipeline-vocab";
 
@@ -294,9 +295,12 @@ export default function SettingsPage() {
         </div>
 
         {filtersMessage && (
-          <FormMessage type={filtersMessage.type}>
-            {filtersMessage.text}
-          </FormMessage>
+          <Toast
+            type={filtersMessage.type}
+            message={filtersMessage.text}
+            onDismiss={() => setFiltersMessage(null)}
+            className="mt-4"
+          />
         )}
 
         <div className="flex justify-end">
@@ -384,9 +388,12 @@ export default function SettingsPage() {
         </div>
 
         {scoringMessage && (
-          <FormMessage type={scoringMessage.type}>
-            {scoringMessage.text}
-          </FormMessage>
+          <Toast
+            type={scoringMessage.type}
+            message={scoringMessage.text}
+            onDismiss={() => setScoringMessage(null)}
+            className="mt-4"
+          />
         )}
 
         <div className="flex justify-end">
@@ -423,9 +430,12 @@ export default function SettingsPage() {
         </div>
 
         {reasonsMessage && (
-          <FormMessage type={reasonsMessage.type}>
-            {reasonsMessage.text}
-          </FormMessage>
+          <Toast
+            type={reasonsMessage.type}
+            message={reasonsMessage.text}
+            onDismiss={() => setReasonsMessage(null)}
+            className="mt-4"
+          />
         )}
 
         <div className="border-t border-gray-200 pt-4 mt-4">
