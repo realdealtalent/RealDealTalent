@@ -60,6 +60,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
   height: 220px;
   width: auto;
   display: block;
+  margin-left: -12px;
 }
 .nav-logo-text {
   font-family: var(--serif);
