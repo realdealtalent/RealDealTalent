@@ -15,6 +15,7 @@ import type { CompanyStatus, SignalType } from "@/db/schema";
 import { Pill } from "@/components/pill";
 import { Skeleton } from "@/components/skeleton";
 import { Toast } from "@/components/toast";
+import { RejectModal } from "./reject-modal";
 import {
   SIGNAL_LABELS,
   SIGNAL_TYPES,
@@ -738,87 +739,6 @@ function getNextStatuses(current: CompanyStatus): CompanyStatus[] {
   return STATUSES.filter((s) => s !== current);
 }
 
-function RejectModal({
-  lostReasons,
-  onConfirm,
-  onCancel,
-}: {
-  lostReasons: LostReason[];
-  onConfirm: (slug: string, note?: string) => void;
-  onCancel: () => void;
-}) {
-  const [selectedSlug, setSelectedSlug] = useState("");
-  const [note, setNote] = useState("");
-  const requiresNote = selectedSlug === "other_with_note";
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 className="text-lg font-semibold text-gray-900">
-            Reject Company
-          </h2>
-          <Button
-            type="button"
-            onClick={onCancel}
-            variant="ghost"
-            size="sm"
-            aria-label="Close reject company modal"
-            className="min-h-0 px-2 py-1 text-xl leading-none text-gray-400 hover:bg-transparent hover:text-gray-600"
-          >
-            &times;
-          </Button>
-        </div>
-        <div className="space-y-4">
-          <FormField label="Lost Reason *" htmlFor="lost-reason">
-            <Select
-              id="lost-reason"
-              value={selectedSlug}
-              onChange={(e) => setSelectedSlug(e.target.value)}
-            >
-              <option value="">Select a reason…</option>
-              {lostReasons.map((r) => (
-                <option key={r.slug} value={r.slug}>
-                  {r.label}
-                </option>
-              ))}
-            </Select>
-          </FormField>
-          <FormField label={`Note ${requiresNote ? "*" : ""}`} htmlFor="lost-note">
-            <Textarea
-              id="lost-note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              rows={3}
-              placeholder={
-                requiresNote ? "Required for this reason" : "Optional"
-              }
-            />
-          </FormField>
-        </div>
-        <div className="flex justify-end gap-3 mt-6">
-          <Button
-            type="button"
-            onClick={onCancel}
-            variant="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            disabled={
-              !selectedSlug || (requiresNote && !note.trim())
-            }
-            onClick={() => onConfirm(selectedSlug, note || undefined)}
-            variant="danger"
-          >
-            Reject
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function AddSignalForm({
   onAdd,
