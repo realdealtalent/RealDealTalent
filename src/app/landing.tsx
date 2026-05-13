@@ -118,7 +118,7 @@ export function LandingPage() {
                   <div className="hero-stat-label">Years of headhunting in industrial markets</div>
                 </div>
                 <div className="hero-stat">
-                  <div className="hero-stat-number">50+</div>
+                  <div className="hero-stat-number">60+</div>
                   <div className="hero-stat-label">Placements across Sales &amp; Operations</div>
                 </div>
                 <div className="hero-stat">
