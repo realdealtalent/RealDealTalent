@@ -266,6 +266,7 @@ export function LandingPage() {
               { role: "General Manager, Field Services", loc: "Ohio", tag: "Operations" },
               { role: "General Manager, Field Services", loc: "Tennessee", tag: "Operations" },
               { role: "General Manager, Lab Services", loc: "Ohio", tag: "Operations" },
+              { role: "General Manager, Lab Services", loc: "Washington", tag: "Operations" },
               { role: "Territory Sales Manager", loc: "South Carolina", tag: "Sales" },
               { role: "Territory Sales Manager", loc: "Texas", tag: "Sales" },
               { role: "Sales Executive", loc: "Texas", tag: "Sales" },
