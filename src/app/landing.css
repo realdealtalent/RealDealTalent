@@ -72,9 +72,10 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
   margin-bottom: 16px;
 }
 .footer-logo-img {
-  height: 48px;
+  height: 220px;
   width: auto;
   display: block;
+  margin-left: -58px;
   margin-bottom: 16px;
   filter: brightness(0) invert(1);
 }
