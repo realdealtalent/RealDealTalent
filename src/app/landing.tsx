@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-const LOGO_SRC = "/Real Deal Talent_D1.png";
+const LOGO_SRC = "/logo.png";
 
 export function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
