@@ -44,9 +44,26 @@ export default function PipelineBoard() {
   return (
     <main className="h-screen flex flex-col">
       <header className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
-        <h1 className="text-xl font-bold text-gray-900">
-          Real Deal Talent — Pipeline
-        </h1>
+        <Link
+          href="/admin/login"
+          className="flex items-center gap-2 text-gray-900 hover:opacity-75 transition-opacity"
+        >
+          <svg
+            className="h-6 w-6 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <h1 className="text-xl font-bold">Real Deal Talent — Pipeline</h1>
+        </Link>
         <div className="flex items-center gap-3">
           <Link
             href="/admin/settings"
