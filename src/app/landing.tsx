@@ -242,7 +242,7 @@ export function LandingPage() {
         <div className="container">
           <div className="proof-title">Proven Performance Since February 2025</div>
           <div className="proof-stats fade-up">
-            <div><div className="proof-stat-num">13+</div><div className="proof-stat-text">Placements since launch</div></div>
+            <div><div className="proof-stat-num">14+</div><div className="proof-stat-text">Placements since launch</div></div>
             <div><div className="proof-stat-num">10+</div><div className="proof-stat-text">Client companies served</div></div>
             <div><div className="proof-stat-num">6</div><div className="proof-stat-text">US &amp; Canadian regions covered</div></div>
           </div>
