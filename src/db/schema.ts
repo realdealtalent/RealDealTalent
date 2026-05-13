@@ -151,3 +151,104 @@ export const scoringConfig = pgTable("scoring_config", {
 });
 
 export type ScoringConfig = typeof scoringConfig.$inferSelect;
+
+// --- Prospecting: conferences → exhibitors → contacts ---
+
+export const industryKind = ["meta", "vertical"] as const;
+export type IndustryKind = (typeof industryKind)[number];
+
+export const prospectingIndustries = pgTable(
+  "prospecting_industries",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    label: text("label").notNull(),
+    // 'meta' = always-applied operating context (Oil & Gas, Industrial Services).
+    // 'vertical' = a specific niche to prospect for (SIPA, TICC, etc.).
+    kind: text("kind").notNull().default("vertical"),
+    searchTerms: text("search_terms").array(),
+    active: boolean("active").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("prospecting_industries_label_idx").on(table.label),
+  ],
+);
+
+export type ProspectingIndustry = typeof prospectingIndustries.$inferSelect;
+export type NewProspectingIndustry = typeof prospectingIndustries.$inferInsert;
+
+export const prospectingRunStatus = [
+  "pending",
+  "running",
+  "completed",
+  "failed",
+] as const;
+
+export type ProspectingRunStatus = (typeof prospectingRunStatus)[number];
+
+export const prospectingRuns = pgTable("prospecting_runs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  parentRunId: uuid("parent_run_id"),
+  industryId: uuid("industry_id").references(() => prospectingIndustries.id),
+  status: text("status").notNull().default("pending"),
+  conferencesFound: integer("conferences_found").notNull().default(0),
+  exhibitorsScraped: integer("exhibitors_scraped").notNull().default(0),
+  companiesEnriched: integer("companies_enriched").notNull().default(0),
+  prospectsAdded: integer("prospects_added").notNull().default(0),
+  contactsAdded: integer("contacts_added").notNull().default(0),
+  error: text("error"),
+  startedAt: timestamp("started_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  finishedAt: timestamp("finished_at", { withTimezone: true }),
+});
+
+export type ProspectingRun = typeof prospectingRuns.$inferSelect;
+export type NewProspectingRun = typeof prospectingRuns.$inferInsert;
+
+export const contacts = pgTable(
+  "contacts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    companyId: uuid("company_id")
+      .notNull()
+      .references(() => companies.id),
+    firstName: text("first_name"),
+    lastName: text("last_name"),
+    fullName: text("full_name"),
+    // Lowercased + trimmed; used for dedupe with normalizedTitle.
+    normalizedName: text("normalized_name").notNull(),
+    title: text("title"),
+    normalizedTitle: text("normalized_title").notNull(),
+    email: text("email"),
+    phone: text("phone"),
+    linkedinUrl: text("linkedin_url"),
+    department: text("department"),
+    seniority: text("seniority"),
+    source: text("source"),
+    externalId: text("external_id"),
+    enrichmentSources: jsonb("enrichment_sources"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("contacts_company_name_title_idx").on(
+      table.companyId,
+      table.normalizedName,
+      table.normalizedTitle,
+    ),
+  ],
+);
+
+export type Contact = typeof contacts.$inferSelect;
+export type NewContact = typeof contacts.$inferInsert;

@@ -5,6 +5,7 @@ import { getCookie, setCookie, deleteCookie } from "hono/cookie";
 import companiesApp from "./companies";
 import lostReasonsApp from "./lost-reasons";
 import configApp from "./config";
+import prospectingApp from "./prospecting";
 
 const app = new Hono().basePath("/api");
 
@@ -68,6 +69,7 @@ app.use("/*", async (c, next) => {
 app.route("/companies", companiesApp);
 app.route("/lost-reasons", lostReasonsApp);
 app.route("/config", configApp);
+app.route("/prospecting", prospectingApp);
 
 const handler = handle(app);
 

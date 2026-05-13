@@ -9,6 +9,7 @@ import { Pill } from "@/components/pill";
 import { Skeleton } from "@/components/skeleton";
 import { STATUSES } from "@/lib/pipeline-vocab";
 import AddCompanyModal from "./add-company-modal";
+import ProspectingSettingsModal from "./prospecting-settings-modal";
 
 type Company = {
   id: string;
@@ -23,6 +24,28 @@ export default function PipelineBoard() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showProspectingSettings, setShowProspectingSettings] = useState(false);
+  const [runningProspecting, setRunningProspecting] = useState(false);
+  const [prospectingToast, setProspectingToast] = useState<string | null>(null);
+
+  const runProspecting = async () => {
+    setRunningProspecting(true);
+    setProspectingToast(null);
+    const res = await fetch("/api/prospecting/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({}),
+    });
+    setRunningProspecting(false);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setProspectingToast(data.error || "Failed to start prospecting run");
+      return;
+    }
+    setProspectingToast(
+      "Prospecting run started — new prospects will appear here as the workflow completes.",
+    );
+  };
 
   const fetchCompanies = async () => {
     const res = await fetch("/api/companies");
@@ -96,6 +119,39 @@ export default function PipelineBoard() {
                       {col.companies.length}
                     </span>
                   </div>
+                  {col.status === "prospect" && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <Button
+                        onClick={runProspecting}
+                        loading={runningProspecting}
+                        size="sm"
+                        className="flex-1 min-h-9"
+                      >
+                        Run Prospecting
+                      </Button>
+                      <Button
+                        onClick={() => setShowProspectingSettings(true)}
+                        variant="secondary"
+                        size="sm"
+                        aria-label="Prospecting settings"
+                        className="min-h-9 px-2"
+                      >
+                        <svg
+                          className="h-4 w-4"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <circle cx="12" cy="12" r="3" />
+                          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                        </svg>
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1 overflow-y-auto p-2 space-y-2">
                   {col.companies.length === 0 ? (
@@ -146,6 +202,28 @@ export default function PipelineBoard() {
             fetchCompanies();
           }}
         />
+      )}
+
+      {showProspectingSettings && (
+        <ProspectingSettingsModal
+          onClose={() => setShowProspectingSettings(false)}
+        />
+      )}
+
+      {prospectingToast && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-sm rounded-md border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800 shadow-lg">
+          <div className="flex items-start gap-3">
+            <p className="flex-1">{prospectingToast}</p>
+            <button
+              type="button"
+              onClick={() => setProspectingToast(null)}
+              className="text-blue-500 hover:text-blue-700"
+              aria-label="Dismiss"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
       )}
     </main>
   );
