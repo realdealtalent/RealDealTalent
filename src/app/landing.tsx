@@ -437,8 +437,7 @@ export function LandingPage() {
         <div className="container">
           <div className="fade-up">
             <div className="section-label">Testimonials</div>
-            <h2 className="section-title">What clients &amp; candidates say.</h2>
-            <p className="section-subtitle">Real feedback from the people who&apos;ve experienced Real Deal Talent firsthand.</p>
+            <h2 className="section-title">What clients &amp; candidates say:</h2>
           </div>
           <div className="testimonials-carousel fade-up" style={{ transitionDelay: "0.1s" }}>
             <div className="testimonials-outer">

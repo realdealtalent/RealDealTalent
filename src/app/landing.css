@@ -564,6 +564,7 @@ section { padding: 120px 0; scroll-margin-top: 72px; }
   font-size: 0.92rem;
   line-height: 1.75;
   color: var(--slate);
+  text-align: justify;
 }
 
 .testimonial-footer {
