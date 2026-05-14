@@ -12,7 +12,7 @@ const TESTIMONIALS = [
     role: "Chief Revenue Officer · Industrial Inspection & Analysis",
     photo: "/Doug%20Vail.jpg",
     type: "Client",
-    quote: `Imran brings energy and creativity to the recruitment process. His diligence early in the process to discover the ideal candidate profile has made the greatest difference for us in each hiring scenario regardless of where we are looking to hire — US or Canada alike. He also preps candidates on our interests so they showcase well, and uses that process to see potential weaknesses. He is a valuable partner for IIA and I am confident he can help source the kind of teammate you need to grow your business.`,
+    quote: `I have had the pleasure of working with Imran on several sales professional hires. Imran brings energy and creativity to the recruitment process as he works through the candidate search process. His diligence early in the process to discover the "ideal candidate" profile has made the greatest difference for us in each hiring scenario regardless of where we are looking to hire; US or Canada roles have been filled through Im. He also preps candidates on our interests as the hiring team so the candidates showcase well, but also uses that process to see potential weaknesses that WE collectively agreed too after the interview stages. He is a valuable partner for IIA and I am confident he can help source the kind of teammate you need to grow your business.`,
   },
   {
     name: "Sam Yank",
@@ -41,6 +41,13 @@ const TESTIMONIALS = [
     photo: "/Kelly%20Terry.jpg",
     type: "Client",
     quote: `Imran is an extremely talented Recruiter who provides excellent service to both the Customers he is representing as well as the candidates he is supporting.`,
+  },
+  {
+    name: "Josh Sweeney",
+    role: "VP of Sales & Marketing · PUPCO",
+    photo: "/Josh%20Sweeney.jpg",
+    type: "Client",
+    quote: `I've had a great experience working with Im. He is honest, persistent, organized, and communicates well throughout the process. What stands out most is his follow-through. When he is working on something, he stays on it and keeps pushing until there is clarity or resolution. He brings a strong sense of urgency without being difficult to work with, and I've appreciated both his professionalism and his relentlessness.`,
   },
   {
     name: "Gregory Poser",
@@ -83,6 +90,20 @@ const TESTIMONIALS = [
     photo: "/Steve%20Gunter.jpg",
     type: "Candidate",
     quote: `Imran is truly in a league of his own for recruiters. I've had many who talk a big game and make promises of what they can do. Imran just puts action in place. He gets to know you and what makes you motivated and finds the right place for you. He is a class act and I will recommend all who are looking to reach out to Imran first.`,
+  },
+  {
+    name: "Kurt Kalousek",
+    role: "Texas Territory Sales Manager · PUPCO",
+    photo: "/Kurt%20Kalousek.jpg",
+    type: "Candidate",
+    quote: `Imran was nothing short of amazing the whole way through my placement process. Professional, kind, and energetic. The same qualities that he looks for in the people he places. He leads by example, and goes above and beyond for the people he believes in. Even during the inevitable bumps in the road, he was there with solutions and guidance to keep my energy up. I was very lucky to have taken his call when I did.`,
+  },
+  {
+    name: "John Kissel",
+    role: "Southeast Sales Executive · Mistras Group",
+    photo: "/John%20Kissel.jpg",
+    type: "Candidate",
+    quote: `I cannot recommend Imran Walji highly enough. Working with him during my job search was one of the best professional experiences I've had. From day one, he was transparent, honest, and incredibly thorough throughout the entire process. He prepared me for every interview, every response, and every step along the way, which gave me a level of confidence I honestly hadn't experienced before with recruiters. What truly separates him from others is that he is completely upfront about the company, the opportunity, and the expectations. There are no surprises, no sales pitch, just honest guidance and professional insight. He genuinely goes above and beyond to make what is normally a very stressful experience as pleasant and seamless as it can possibly be. Most importantly, he doesn't try to fit you into the job someone else thinks you deserve — he works to help you land the job you actually deserve. A total professional in every sense of the word, and someone I would absolutely work with again and recommend to anyone looking to take the next step in their career.`,
   },
 ];
 
