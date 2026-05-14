@@ -29,6 +29,13 @@ const TESTIMONIALS = [
     quote: `Im may be the most energetic person I've ever met! His hard work, over many months, to find us the perfect candidate has been absolutely invaluable to our company and to me personally. He gets results, is outstanding at follow up and most importantly — he does every single thing he says he will do. Dependable, professional and a heck of a good guy. Will definitely give Im a call again! He is a rock star.`,
   },
   {
+    name: "Josh Sweeney",
+    role: "VP of Sales & Marketing · PUPCO",
+    photo: "/Josh%20Sweeney.jpg",
+    type: "Client",
+    quote: `I've had a great experience working with Im. He is honest, persistent, organized, and communicates well throughout the process. What stands out most is his follow-through. When he is working on something, he stays on it and keeps pushing until there is clarity or resolution. He brings a strong sense of urgency without being difficult to work with, and I've appreciated both his professionalism and his relentlessness.`,
+  },
+  {
     name: "Jim Habeck",
     role: "Director of Sales, Electrical & Datacom · PUPCO",
     photo: "/Jim%20Habeck.jpg",
@@ -41,13 +48,6 @@ const TESTIMONIALS = [
     photo: "/Kelly%20Terry.jpg",
     type: "Client",
     quote: `Imran is an extremely talented Recruiter who provides excellent service to both the Customers he is representing as well as the candidates he is supporting.`,
-  },
-  {
-    name: "Josh Sweeney",
-    role: "VP of Sales & Marketing · PUPCO",
-    photo: "/Josh%20Sweeney.jpg",
-    type: "Client",
-    quote: `I've had a great experience working with Im. He is honest, persistent, organized, and communicates well throughout the process. What stands out most is his follow-through. When he is working on something, he stays on it and keeps pushing until there is clarity or resolution. He brings a strong sense of urgency without being difficult to work with, and I've appreciated both his professionalism and his relentlessness.`,
   },
   {
     name: "Gregory Poser",
@@ -85,13 +85,6 @@ const TESTIMONIALS = [
     quote: `Working with Imran has been a sincere pleasure. He was always responsive and truly listened to my needs and wants as a sales professional. Imran also had a strong understanding of the market I was looking to work in — he knew the strong companies and the ones that were not going to be a good fit for me. Would I recommend Imran, yes 100%!`,
   },
   {
-    name: "Steve Gunter",
-    role: "Sales Manager · John Crane",
-    photo: "/Steve%20Gunter.jpg",
-    type: "Candidate",
-    quote: `Imran is truly in a league of his own for recruiters. I've had many who talk a big game and make promises of what they can do. Imran just puts action in place. He gets to know you and what makes you motivated and finds the right place for you. He is a class act and I will recommend all who are looking to reach out to Imran first.`,
-  },
-  {
     name: "Kurt Kalousek",
     role: "Texas Territory Sales Manager · PUPCO",
     photo: "/Kurt%20Kalousek.jpg",
@@ -103,7 +96,14 @@ const TESTIMONIALS = [
     role: "Southeast Sales Executive · Mistras Group",
     photo: "/John%20Kissel.jpg",
     type: "Candidate",
-    quote: `I cannot recommend Imran Walji highly enough. Working with him during my job search was one of the best professional experiences I've had. From day one, he was transparent, honest, and incredibly thorough throughout the entire process. He prepared me for every interview, every response, and every step along the way, which gave me a level of confidence I honestly hadn't experienced before with recruiters. What truly separates him from others is that he is completely upfront about the company, the opportunity, and the expectations. There are no surprises, no sales pitch, just honest guidance and professional insight. He genuinely goes above and beyond to make what is normally a very stressful experience as pleasant and seamless as it can possibly be. Most importantly, he doesn't try to fit you into the job someone else thinks you deserve — he works to help you land the job you actually deserve. A total professional in every sense of the word, and someone I would absolutely work with again and recommend to anyone looking to take the next step in their career.`,
+    quote: `I cannot recommend Imran Walji highly enough. Working with him during my job search was one of the best professional experiences I've had. From day one, he was transparent, honest, and incredibly thorough throughout the entire process. He prepared me for every interview, every response, and every step along the way, which gave me a level of confidence I honestly hadn't experienced before with recruiters. What truly separates him from others is that he is completely upfront about the company, the opportunity, and the expectations. There are no surprises, no sales pitch, just honest guidance and professional insight.`,
+  },
+  {
+    name: "Steve Gunter",
+    role: "Sales Manager · John Crane",
+    photo: "/Steve%20Gunter.jpg",
+    type: "Candidate",
+    quote: `Imran is truly in a league of his own for recruiters. I've had many who talk a big game and make promises of what they can do. Imran just puts action in place. He gets to know you and what makes you motivated and finds the right place for you. He is a class act and I will recommend all who are looking to reach out to Imran first.`,
   },
 ];
 
