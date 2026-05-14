@@ -130,9 +130,9 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 
 /* ========== HERO ========== */
 .hero {
-  min-height: 100vh;
+  min-height: auto;
   display: flex; align-items: center;
-  padding-top: 72px;
+  padding: 120px 0 80px;
   position: relative;
   overflow: hidden;
 }
@@ -240,7 +240,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 }
 
 /* ========== SECTION COMMON ========== */
-section { padding: 120px 0; }
+section { padding: 120px 0; scroll-margin-top: 72px; }
 
 .section-label {
   display: inline-flex; align-items: center; gap: 10px;
@@ -271,7 +271,7 @@ section { padding: 120px 0; }
 }
 
 /* ========== ABOUT ========== */
-.about { background: var(--paper); }
+.about { background: var(--paper); padding-top: 80px; }
 
 .about-grid {
   display: grid;

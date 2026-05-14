@@ -183,6 +183,7 @@ export function LandingPage() {
             <li><a href="#industries">Industries</a></li>
             <li><a href="#specialties">Specialties</a></li>
             <li><a href="#placements">Track Record</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact" className="nav-cta">Let&apos;s Talk</a></li>
           </ul>
           <button
@@ -207,6 +208,7 @@ export function LandingPage() {
         <a href="#industries" onClick={() => setMobileMenuOpen(false)}>Industries</a>
         <a href="#specialties" onClick={() => setMobileMenuOpen(false)}>Specialties</a>
         <a href="#placements" onClick={() => setMobileMenuOpen(false)}>Track Record</a>
+        <a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Testimonials</a>
         <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Let&apos;s Talk</a>
       </div>
 
@@ -431,7 +433,7 @@ export function LandingPage() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="testimonials-section">
+      <section className="testimonials-section" id="testimonials">
         <div className="container">
           <div className="fade-up">
             <div className="section-label">Testimonials</div>
@@ -515,7 +517,7 @@ export function LandingPage() {
             </div>
             <div className="footer-col">
               <h4>Navigate</h4>
-              <a href="#about">About</a><a href="#industries">Industries</a><a href="#specialties">Specialties</a><a href="#placements">Track Record</a>
+              <a href="#about">About</a><a href="#industries">Industries</a><a href="#specialties">Specialties</a><a href="#placements">Track Record</a><a href="#testimonials">Testimonials</a>
             </div>
             <div className="footer-col">
               <h4>Industries</h4>
