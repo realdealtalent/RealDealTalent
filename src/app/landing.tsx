@@ -453,7 +453,7 @@ export function LandingPage() {
                       <div className="testimonial-footer">
                         <div className="testimonial-author">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={t.photo} alt={t.name} className="testimonial-avatar" />
+                          <img src={t.photo} alt={t.name} className="testimonial-avatar" width={42} height={42} />
                           <div>
                             <div className="testimonial-name">{t.name}</div>
                             <div className="testimonial-role">{t.role}</div>
