@@ -238,7 +238,7 @@ export function LandingPage() {
                   <div className="hero-stat-label">Placements across Sales &amp; Operations</div>
                 </div>
                 <div className="hero-stat">
-                  <div className="hero-stat-number">US &amp; CA</div>
+                  <div className="hero-stat-number">US &amp; Canada</div>
                   <div className="hero-stat-label">Nationwide reach, coast to coast</div>
                 </div>
               </div>
