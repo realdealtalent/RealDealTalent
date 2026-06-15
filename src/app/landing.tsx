@@ -47,7 +47,7 @@ const TESTIMONIALS = [
     role: "Director of Talent Acquisition · Mistras Group",
     photo: "/Kelly%20Terry.jpg",
     type: "Client",
-    quote: `Imran is an extremely talented Recruiter who provides excellent service to both the Customers he is representing as well as the candidates he is supporting.`,
+    quote: `Imran is an extremely talented recruiter who provides excellent service to both the customers he is representing as well as the candidates he is supporting. He has helped MISTRAS with over 20 sales and operations hires across our primary MISTRAS NDT business, as well as Onstream Inline Inspection, Plant Condition Management Software (PCMS), and New Century Software (NCS). I highly recommend him as a partner to any industrial services business looking to add sales and operations talent.`,
   },
   {
     name: "Gregory Poser",
