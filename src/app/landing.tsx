@@ -50,6 +50,13 @@ const TESTIMONIALS = [
     quote: `Imran is an extremely talented recruiter who provides excellent service to both the customers he is representing as well as the candidates he is supporting. He has helped MISTRAS with over 20 sales and operations hires across our primary MISTRAS NDT business, as well as Onstream Inline Inspection, Plant Condition Management Software (PCMS), and New Century Software (NCS). I highly recommend him as a partner to any industrial services business looking to add sales and operations talent.`,
   },
   {
+    name: `Gennaro "Jerry" D'Alterio`,
+    role: "Chief Commercial Officer · Mistras Group",
+    photo: "/Jerry%20D'Alterio.jpeg",
+    type: "Client",
+    quote: `Over the past three years, I've had the pleasure of working with Imran Walji and can confidently say he is one of the most authentic and effective recruiters I've encountered in my career. What sets Imran apart is that he is not focused on simply filling a position or closing a deal. He genuinely strives to create a win-win outcome for both the organization and the candidate. He takes the time to thoroughly understand the company, its culture, leadership, and objectives so he can accurately represent the opportunity and identify candidates who are truly the right fit. Imran is exceptionally detail-oriented, responsive, and well-prepared. By the time he presents a candidate, he has done his homework, vetted the individual thoroughly, and addressed the key questions and considerations upfront. This level of diligence saves valuable time and consistently leads to better outcomes. Perhaps most importantly, Imran operates with complete transparency and integrity. He has no hidden agenda, communicates openly and directly, and is committed to building long-term relationships rather than pursuing short-term transactions. His honesty, professionalism, and genuine care for both clients and candidates are refreshing in an industry where those qualities can sometimes be hard to find. If you are looking for a recruiting partner who is trustworthy, thorough, and invested in your long-term success, I highly recommend Imran. He truly lives up to the title of "The Honest Headhunter."`,
+  },
+  {
     name: "Gregory Poser",
     role: "Sr. Technical Program Manager · Blue Origin",
     photo: "/Greg%20Poser.jpg",
