@@ -1,25 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 const LOGO_SRC = "/logo.png";
 
+const CLIENT_LOGOS = [
+  { src: "/Mistras%20Logo.png",                      alt: "Mistras Group",                  href: "https://www.mistrasgroup.com",      cls: "" },
+  { src: "/IIA%20Logo.png",                           alt: "Industrial Inspection & Analysis", href: "https://industrial-ia.com",        cls: "" },
+  { src: "/Kova%20Engineering%20Logo.png",            alt: "Kova Engineering",               href: "https://www.kova.com",              cls: "client-logo--kova", linkCls: "client-logo-link--multiply" },
+  { src: "/ISS%20Logo.png",                           alt: "Industrial Specialty Services",  href: "https://isservices.com",            cls: "client-logo--tall" },
+  { src: "/DarkVision%20Logo.webp",                   alt: "DarkVision",                     href: "https://darkvisiontech.com",        cls: "" },
+  { src: "/PUPCO%20Logo.webp",                        alt: "PUPCO",                          href: "https://pupco.com",                 cls: "" },
+  { src: "/Rent%20Equip%20Logo.svg",                  alt: "Rent Equip",                     href: "https://www.getrentequip.com",      cls: "client-logo--tall" },
+  { src: "/Wilcoxon%20Sensing%20Technologies.webp",   alt: "Wilcoxon Sensing Technologies",  href: "https://wilcoxon.com",              cls: "" },
+  { src: "/Ultimate%20Tool%20%26%20Safety%20Logo.png", alt: "Ultimate Tool & Safety",        href: "https://ultimatetoolandsafety.com", cls: "client-logo--lg" },
+];
+
 const TESTIMONIALS = [
+  {
+    name: `Gennaro "Jerry" D'Alterio`,
+    role: "Chief Commercial Officer · Mistras Group",
+    photo: "/Jerry%20D'Alterio.jpeg",
+    type: "Client",
+    quote: `Over the past three years, I've had the pleasure of working with Imran Walji and can confidently say he is one of the most authentic and effective recruiters I've encountered in my career. What sets Imran apart is that he is not focused on simply filling a position or closing a deal. He genuinely strives to create a win-win outcome for both the organization and the candidate. He takes the time to thoroughly understand the company, its culture, leadership, and objectives so he can accurately represent the opportunity and identify candidates who are truly the right fit. Imran is exceptionally detail-oriented, responsive, and well-prepared. By the time he presents a candidate, he has done his homework, vetted the individual thoroughly, and addressed the key questions and considerations upfront. This level of diligence saves valuable time and consistently leads to better outcomes. Perhaps most importantly, Imran operates with complete transparency and integrity. He has no hidden agenda, communicates openly and directly, and is committed to building long-term relationships rather than pursuing short-term transactions. His honesty, professionalism, and genuine care for both clients and candidates are refreshing in an industry where those qualities can sometimes be hard to find. If you are looking for a recruiting partner who is trustworthy, thorough, and invested in your long-term success, I highly recommend Imran. He truly lives up to the title of "The Honest Headhunter."`,
+  },
   {
     name: "Doug Vail",
     role: "Chief Revenue Officer · Industrial Inspection & Analysis",
     photo: "/Doug%20Vail.jpg",
     type: "Client",
     quote: `I have had the pleasure of working with Imran on several sales professional hires. Imran brings energy and creativity to the recruitment process as he works through the candidate search process. His diligence early in the process to discover the "ideal candidate" profile has made the greatest difference for us in each hiring scenario regardless of where we are looking to hire; US or Canada roles have been filled through Im. He also preps candidates on our interests as the hiring team so the candidates showcase well, but also uses that process to see potential weaknesses that WE collectively agreed too after the interview stages. He is a valuable partner for IIA and I am confident he can help source the kind of teammate you need to grow your business.`,
-  },
-  {
-    name: "Sam Yank",
-    role: "Vice President of Sales · Industrial Inspection & Analysis",
-    photo: "/Sam%20Yank.jpg",
-    type: "Client",
-    quote: `Imran is one of the most dedicated and effective recruiters I've encountered. He has a strong ability to understand both the needs of the organization and the goals of candidates, which allows him to make thoughtful, well-aligned matches. What sets Imran apart is his commitment to building real relationships, not just filling roles. He took the time to ensure the right fit for everyone involved, which leads to better long-term outcomes.`,
   },
   {
     name: "Shane Walsh",
@@ -36,11 +48,11 @@ const TESTIMONIALS = [
     quote: `I've had a great experience working with Im. He is honest, persistent, organized, and communicates well throughout the process. What stands out most is his follow-through. When he is working on something, he stays on it and keeps pushing until there is clarity or resolution. He brings a strong sense of urgency without being difficult to work with, and I've appreciated both his professionalism and his relentlessness.`,
   },
   {
-    name: "Jim Habeck",
-    role: "Director of Sales, Electrical & Datacom · PUPCO",
-    photo: "/Jim%20Habeck.jpg",
+    name: "Sam Yank",
+    role: "Vice President of Sales · Industrial Inspection & Analysis",
+    photo: "/Sam%20Yank.jpg",
     type: "Client",
-    quote: `Imran is one of the most tenacious and hardworking recruiters I've partnered with. He consistently goes the extra mile to source strong, high-quality candidates and doesn't stop until he finds the right match. What truly sets him apart is the time he takes to deeply understand our business — our goals, our challenges, and our culture. Im approaches recruiting as a true business partner, not just a vendor.`,
+    quote: `Imran is one of the most dedicated and effective recruiters I've encountered. He has a strong ability to understand both the needs of the organization and the goals of candidates, which allows him to make thoughtful, well-aligned matches. What sets Imran apart is his commitment to building real relationships, not just filling roles. He took the time to ensure the right fit for everyone involved, which leads to better long-term outcomes.`,
   },
   {
     name: "Kelly Terry",
@@ -50,11 +62,11 @@ const TESTIMONIALS = [
     quote: `Imran is an extremely talented recruiter who provides excellent service to both the customers he is representing as well as the candidates he is supporting. He has helped MISTRAS with over 20 sales and operations hires across our primary MISTRAS NDT business, as well as Onstream Inline Inspection, Plant Condition Management Software (PCMS), and New Century Software (NCS). I highly recommend him as a partner to any industrial services business looking to add sales and operations talent.`,
   },
   {
-    name: `Gennaro "Jerry" D'Alterio`,
-    role: "Chief Commercial Officer · Mistras Group",
-    photo: "/Jerry%20D'Alterio.jpeg",
+    name: "Jim Habeck",
+    role: "Director of Sales, Electrical & Datacom · PUPCO",
+    photo: "/Jim%20Habeck.jpg",
     type: "Client",
-    quote: `Over the past three years, I've had the pleasure of working with Imran Walji and can confidently say he is one of the most authentic and effective recruiters I've encountered in my career. What sets Imran apart is that he is not focused on simply filling a position or closing a deal. He genuinely strives to create a win-win outcome for both the organization and the candidate. He takes the time to thoroughly understand the company, its culture, leadership, and objectives so he can accurately represent the opportunity and identify candidates who are truly the right fit. Imran is exceptionally detail-oriented, responsive, and well-prepared. By the time he presents a candidate, he has done his homework, vetted the individual thoroughly, and addressed the key questions and considerations upfront. This level of diligence saves valuable time and consistently leads to better outcomes. Perhaps most importantly, Imran operates with complete transparency and integrity. He has no hidden agenda, communicates openly and directly, and is committed to building long-term relationships rather than pursuing short-term transactions. His honesty, professionalism, and genuine care for both clients and candidates are refreshing in an industry where those qualities can sometimes be hard to find. If you are looking for a recruiting partner who is trustworthy, thorough, and invested in your long-term success, I highly recommend Imran. He truly lives up to the title of "The Honest Headhunter."`,
+    quote: `Imran is one of the most tenacious and hardworking recruiters I've partnered with. He consistently goes the extra mile to source strong, high-quality candidates and doesn't stop until he finds the right match. What truly sets him apart is the time he takes to deeply understand our business — our goals, our challenges, and our culture. Im approaches recruiting as a true business partner, not just a vendor.`,
   },
   {
     name: "Gregory Poser",
@@ -118,7 +130,11 @@ export function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const [testimonialIndex, setTestimonialIndex] = useState(0);
-  const [testimonialsPerPage, setTestimonialsPerPage] = useState(3);
+  const [logoIndex, setLogoIndex] = useState(0);
+  const [logoOffset, setLogoOffset] = useState(0);
+  const [logoAnimate, setLogoAnimate] = useState(true);
+  const [logoPaused, setLogoPaused] = useState(false);
+  const logoTrackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Navbar scroll effect
@@ -165,16 +181,47 @@ export function LandingPage() {
     };
   }, [mobileMenuOpen]);
 
+  // Measure actual slide position for translateX
   useEffect(() => {
-    const update = () => {
-      const perPage = window.innerWidth < 768 ? 1 : 3;
-      setTestimonialsPerPage(perPage);
-      setTestimonialIndex(0);
+    const slide = logoTrackRef.current?.children[logoIndex] as HTMLElement | undefined;
+    if (slide) setLogoOffset(slide.offsetLeft);
+  }, [logoIndex]);
+
+  // Logo step carousel: advance one slot every 3s, pause on hover
+  useEffect(() => {
+    if (logoPaused) return;
+    const tick = setInterval(() => setLogoIndex(i => i + 1), 3000);
+    return () => clearInterval(tick);
+  }, [logoPaused]);
+
+  // Seamless wrap: when we hit the clone set, snap back to start
+  useEffect(() => {
+    if (logoIndex === CLIENT_LOGOS.length) {
+      const t = setTimeout(() => {
+        setLogoAnimate(false);
+        setLogoIndex(0);
+      }, 500);
+      return () => clearTimeout(t);
+    }
+  }, [logoIndex]);
+
+  // Re-enable transition one frame after the snap
+  useEffect(() => {
+    if (!logoAnimate) {
+      const t = setTimeout(() => setLogoAnimate(true), 50);
+      return () => clearTimeout(t);
+    }
+  }, [logoAnimate]);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+      if (e.key === "ArrowRight") setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length);
     };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
   }, []);
+
 
   return (
     <>
@@ -249,6 +296,85 @@ export function LandingPage() {
                   <div className="hero-stat-label">Nationwide reach, coast to coast</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OUR CLIENTS */}
+      <section className="our-clients-section">
+        <div className="container">
+          <div className="fade-up">
+            <div className="section-label section-label--center">Our Clients</div>
+          </div>
+          <div
+            className="logo-marquee fade-up"
+            onMouseEnter={() => setLogoPaused(true)}
+            onMouseLeave={() => setLogoPaused(false)}
+          >
+            <div
+              className="logos-track"
+              ref={logoTrackRef}
+              style={{
+                transform: `translateX(-${logoOffset}px)`,
+                transition: logoAnimate ? 'transform 0.5s ease' : 'none',
+              }}
+            >
+              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
+                <div key={i} className="logo-slide">
+                  <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`client-logo-link ${logo.linkCls ?? ""}`}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={logo.src} alt={logo.alt} className={`client-logo ${logo.cls}`} />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section className="testimonials-section" id="testimonials">
+        <div className="container">
+          <div className="fade-up">
+            <div className="section-label section-label--center">Testimonials</div>
+          </div>
+          <div className="testimonials-carousel fade-up" style={{ transitionDelay: "0.1s" }}>
+            <div className="testimonials-row">
+              <button
+                className="carousel-btn"
+                onClick={() => setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
+                aria-label="Previous testimonial"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M11 14l-5-5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <div className="testimonials-outer">
+                {(() => { const t = TESTIMONIALS[testimonialIndex]; return (
+                  <div className="testimonial-card" key={testimonialIndex}>
+                    <div className="testimonial-card-inner">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={t.photo} alt={t.name} className="testimonial-avatar" width={88} height={88} />
+                      <p className="testimonial-quote">{t.quote}</p>
+                      <div className="testimonial-attribution">
+                        <div className="testimonial-name">{t.name}</div>
+                        <div className="testimonial-role">{t.role}</div>
+                        <span className={`testimonial-type ${t.type.toLowerCase()}`}>{t.type}</span>
+                      </div>
+                    </div>
+                  </div>
+                ); })()}
+              </div>
+              <button
+                className="carousel-btn"
+                onClick={() => setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length)}
+                aria-label="Next testimonial"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M7 4l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -422,65 +548,6 @@ export function LandingPage() {
               <div className="client-type-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
               <h3>VC-Backed Startups</h3>
               <p>IIoT, SaaS, and industrial tech companies hiring their first sales leaders</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="testimonials-section" id="testimonials">
-        <div className="container">
-          <div className="fade-up">
-            <div className="section-label">Testimonials</div>
-            <h2 className="section-title">What clients &amp; candidates say:</h2>
-          </div>
-          <div className="testimonials-carousel fade-up" style={{ transitionDelay: "0.1s" }}>
-            <div className="testimonials-outer">
-              <div
-                className="testimonials-inner"
-                style={{ transform: `translateX(-${testimonialIndex * (100 / testimonialsPerPage)}%)` }}
-              >
-                {TESTIMONIALS.map((t, i) => (
-                  <div className="testimonial-card" key={i}>
-                    <div className="testimonial-card-inner">
-                      <p className="testimonial-quote">{t.quote}</p>
-                      <div className="testimonial-footer">
-                        <div className="testimonial-author">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={t.photo} alt={t.name} className="testimonial-avatar" width={42} height={42} />
-                          <div>
-                            <div className="testimonial-name">{t.name}</div>
-                            <div className="testimonial-role">{t.role}</div>
-                          </div>
-                        </div>
-                        <span className={`testimonial-type ${t.type.toLowerCase()}`}>{t.type}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="carousel-controls">
-              <button
-                className="carousel-btn"
-                onClick={() => setTestimonialIndex(i => Math.max(0, i - 1))}
-                disabled={testimonialIndex === 0}
-                aria-label="Previous testimonials"
-              >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M11 14l-5-5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              <button
-                className="carousel-btn"
-                onClick={() => setTestimonialIndex(i => Math.min(TESTIMONIALS.length - testimonialsPerPage, i + 1))}
-                disabled={testimonialIndex === TESTIMONIALS.length - testimonialsPerPage}
-                aria-label="Next testimonials"
-              >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M7 4l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
             </div>
           </div>
         </div>
