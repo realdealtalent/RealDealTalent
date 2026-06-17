@@ -233,11 +233,10 @@ export function LandingPage() {
             <img src={LOGO_SRC} alt="Real Deal Talent" className="nav-logo-img" />
           </a>
           <ul className="nav-links">
+            <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#industries">Industries</a></li>
-            <li><a href="#specialties">Specialties</a></li>
-            <li><a href="#placements">Track Record</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#specialties">What We Recruit</a></li>
             <li><a href="#contact" className="nav-cta">Let&apos;s Talk</a></li>
           </ul>
           <button
@@ -258,11 +257,10 @@ export function LandingPage() {
         className={`mobile-menu${mobileMenuOpen ? " open" : ""}`}
         id="mobileMenu"
       >
+        <a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Testimonials</a>
         <a href="#about" onClick={() => setMobileMenuOpen(false)}>About</a>
         <a href="#industries" onClick={() => setMobileMenuOpen(false)}>Industries</a>
-        <a href="#specialties" onClick={() => setMobileMenuOpen(false)}>Specialties</a>
-        <a href="#placements" onClick={() => setMobileMenuOpen(false)}>Track Record</a>
-        <a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Testimonials</a>
+        <a href="#specialties" onClick={() => setMobileMenuOpen(false)}>What We Recruit</a>
         <a href="#contact" onClick={() => setMobileMenuOpen(false)}>Let&apos;s Talk</a>
       </div>
 
@@ -278,7 +276,6 @@ export function LandingPage() {
                   Start a Search
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
-                <a href="#placements" className="btn-secondary">See Our Track Record</a>
               </div>
             </div>
             <div className="hero-visual fade-up" style={{ transitionDelay: "0.15s" }}>
@@ -509,7 +506,7 @@ export function LandingPage() {
             </div>
             <div className="footer-col">
               <h4>Navigate</h4>
-              <a href="#about">About</a><a href="#industries">Industries</a><a href="#specialties">Specialties</a><a href="#placements">Track Record</a><a href="#testimonials">Testimonials</a>
+              <a href="#testimonials">Testimonials</a><a href="#about">About</a><a href="#industries">Industries</a><a href="#specialties">What We Recruit</a>
             </div>
             <div className="footer-col">
               <h4>Industries</h4>
