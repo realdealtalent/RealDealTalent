@@ -430,9 +430,7 @@ export function LandingPage() {
       <section className="industries" id="industries">
         <div className="container">
           <div className="fade-up">
-            <div className="section-label">Industries We Serve</div>
-            <h2 className="section-title" style={{ color: "var(--paper)" }}>Built for the toughest industries.</h2>
-            <p className="section-subtitle">We recruit where the work is hard, the stakes are high, and the right hire makes all the difference.</p>
+            <div className="section-label section-label--center">Industries We Serve</div>
           </div>
           <div className="industry-grid">
             <div className="industry-card fade-up">
@@ -463,9 +461,9 @@ export function LandingPage() {
       <section className="specialties" id="specialties">
         <div className="container">
           <div className="fade-up">
-            <div className="section-label">What We Recruit</div>
-            <h2 className="section-title">Sales &amp; Operations. That&apos;s our lane.</h2>
-            <p className="section-subtitle">We stay focused so we can stay the best at what we do.</p>
+            <div className="section-label section-label--center">What We Recruit</div>
+
+
           </div>
           <div className="spec-grid">
             <div className="spec-card fade-up">
@@ -481,73 +479,6 @@ export function LandingPage() {
               <div className="spec-roles">
                 <span>Operations Managers</span><span>Branch Managers</span><span>General Managers</span><span>Regional Managers</span><span>District Managers</span><span>Division Managers</span><span>Directors of Operations</span><span>VPs of Operations</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TRACK RECORD */}
-      <section className="track-record" id="placements">
-        <div className="container">
-          <div className="fade-up">
-            <div className="section-label">Recent Placements</div>
-            <h2 className="section-title">Results speak louder than resumes.</h2>
-            <p className="section-subtitle">A snapshot of talent placed since launching Real Deal Talent in 2025.</p>
-          </div>
-          <div className="placements-grid">
-            {[
-              { role: "Director of Strategic Accounts", loc: "O&G Field Services — US & Canada", tag: "Sales" },
-              { role: "Regional Sales Manager", loc: "Gulf Coast", tag: "Sales" },
-              { role: "Regional Sales Manager", loc: "Alberta, Canada", tag: "Sales" },
-              { role: "Regional Sales Manager", loc: "British Columbia, Canada", tag: "Sales" },
-              { role: "General Manager, Field Services", loc: "Ohio", tag: "Operations" },
-              { role: "General Manager, Field Services", loc: "Tennessee", tag: "Operations" },
-              { role: "General Manager, Lab Services", loc: "Ohio", tag: "Operations" },
-              { role: "General Manager, Lab Services", loc: "Washington", tag: "Operations" },
-              { role: "Territory Sales Manager", loc: "South Carolina", tag: "Sales" },
-              { role: "Territory Sales Manager", loc: "Texas", tag: "Sales" },
-              { role: "Sales Executive", loc: "Texas", tag: "Sales" },
-              { role: "Sales Executive", loc: "Western Canada", tag: "Sales" },
-              { role: "Outside Sales Rep", loc: "Central Texas", tag: "Sales" },
-              { role: "Account Manager", loc: "West Texas", tag: "Sales" },
-            ].map((p, i) => (
-              <div className="placement-item fade-up" key={i}>
-                <div className="placement-role">{p.role}</div>
-                <div className="placement-loc">{p.loc}</div>
-                <div className="placement-tag">{p.tag}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CLIENT TYPES */}
-      <section className="clients-section">
-        <div className="container">
-          <div className="fade-up">
-            <div className="section-label" style={{ justifyContent: "center" }}>Who We Work With</div>
-            <h2 className="section-title" style={{ textAlign: "center" }}>Built for companies that build things.</h2>
-          </div>
-          <div className="client-types fade-up">
-            <div className="client-type">
-              <div className="client-type-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-              <h3>PE-Backed Companies</h3>
-              <p>Portfolio companies needing to scale sales and ops teams on a timeline</p>
-            </div>
-            <div className="client-type">
-              <div className="client-type-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM12 8v8M8 12h8"/></svg></div>
-              <h3>Publicly-Traded Firms</h3>
-              <p>Large-cap industrials and services companies expanding market coverage</p>
-            </div>
-            <div className="client-type">
-              <div className="client-type-icon"><svg viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
-              <h3>Privately-Held Operators</h3>
-              <p>Family-owned and founder-led industrial businesses ready to grow</p>
-            </div>
-            <div className="client-type">
-              <div className="client-type-icon"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-              <h3>VC-Backed Startups</h3>
-              <p>IIoT, SaaS, and industrial tech companies hiring their first sales leaders</p>
             </div>
           </div>
         </div>
