@@ -528,7 +528,7 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 
 .logo-marquee {
   overflow: hidden;
-  margin-top: 40px;
+  margin-top: 24px;
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
@@ -601,7 +601,7 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 /* ========== TESTIMONIALS ========== */
 .testimonials-section { background: var(--paper); }
 
-.testimonials-carousel { margin-top: 48px; }
+.testimonials-carousel { margin-top: 24px; }
 
 .testimonials-row {
   display: flex;
@@ -733,9 +733,9 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 
 /* ========== CTA BANNER ========== */
 .cta-banner {
-  background: var(--rust);
+  background: var(--cream);
   text-align: center;
-  color: #fff;
+  color: var(--ink);
   position: relative;
   overflow: hidden;
 }
@@ -772,14 +772,14 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 }
 .cta-banner .btn-white {
   display: inline-flex; align-items: center; gap: 8px;
-  background: #fff; color: var(--rust-dark);
+  background: var(--rust); color: #fff;
   padding: 16px 36px; border-radius: 6px;
   text-decoration: none; font-weight: 700;
   font-size: 1rem;
   transition: all 0.2s;
   position: relative;
 }
-.cta-banner .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.cta-banner .btn-white:hover { background: var(--rust-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,90,45,0.25); }
 
 /* ========== FOOTER ========== */
 footer {
