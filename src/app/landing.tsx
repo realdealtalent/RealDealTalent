@@ -59,7 +59,7 @@ const TESTIMONIALS = [
     role: "Director of Talent Acquisition · Mistras Group",
     photo: "/Kelly%20Terry.jpg",
     type: "Client",
-    quote: `Imran is an extremely talented recruiter who provides excellent service to both the customers he is representing as well as the candidates he is supporting. He has helped MISTRAS with over 20 sales and operations hires across our primary MISTRAS NDT business, as well as Onstream Inline Inspection, Plant Condition Management Software (PCMS), and New Century Software (NCS). I highly recommend him as a partner to any industrial services business looking to add sales and operations talent.`,
+    quote: `Imran is an extremely talented recruiter who provides excellent service to both the customers he is representing as well as the candidates he is supporting. He has helped us with over 20 sales and operations hires across our primary NDT business, as well as Onstream Inline Inspection, Plant Condition Management Software (PCMS), and New Century Software (NCS). I highly recommend him as a partner to any industrial services business looking to add sales and operations talent.`,
   },
   {
     name: "Jim Habeck",
@@ -69,11 +69,18 @@ const TESTIMONIALS = [
     quote: `Imran is one of the most tenacious and hardworking recruiters I've partnered with. He consistently goes the extra mile to source strong, high-quality candidates and doesn't stop until he finds the right match. What truly sets him apart is the time he takes to deeply understand our business — our goals, our challenges, and our culture. Im approaches recruiting as a true business partner, not just a vendor.`,
   },
   {
-    name: "Gregory Poser",
-    role: "Sr. Technical Program Manager · Blue Origin",
-    photo: "/Greg%20Poser.jpg",
+    name: "Clint Maners",
+    role: "Gulf Regional Sales Manager · Industrial Inspection & Analysis",
+    photo: "/Clint%20Maners.jpeg",
     type: "Candidate",
-    quote: `Imran was far and away the best recruiter experience I've ever had. He was responsive, communicative, professional, and warm. Most importantly, Imran went to great lengths to ensure the role was a good fit and that compensation and role expectations were in-line with my desires. There was never a moment where I felt that he was pushing me into the role, it felt very collaborative. I could not recommend Imran enough for anyone requiring recruiting services.`,
+    quote: `From a random phone call on a job opportunity that I eventually got, thanks to Imran and his negotiating skills. Imran is by far one of the best recruiters I've ever worked with. He does a great job of talking through things and helping prep throughout the process. It's been well over a year and we still talk on the regular just to ensure all is well. Highly recommend working with Imran and Real Deal Talent!`,
+  },
+  {
+    name: "Connor Seebach",
+    role: "British Columbia Regional Sales Manager · Industrial Inspection & Analysis/KOVA",
+    photo: "/Connor%20Seebach.jpeg",
+    type: "Candidate",
+    quote: `I had an excellent experience working with Imran. Throughout the process, he was professional, responsive, and genuinely invested in finding the right fit for both the candidate and employer. Imran's communication was clear, and he provided valuable guidance every step of the way. I appreciated his attention to detail, and commitment to ensuring a smooth recruitment process. I would highly recommend Imran to anyone seeking career opportunities or recruitment support.`,
   },
   {
     name: "Amanda Wright",
@@ -81,6 +88,13 @@ const TESTIMONIALS = [
     photo: "/Amanda%20Wright.jpg",
     type: "Candidate",
     quote: `Imran is the most amazing recruiter! Not only does he do a deep dive into the industry, company, and position he's hiring for, he's also a great coach to his candidates. Thorough professional with integrity. 5 out of 5 stars!`,
+  },
+  {
+    name: "Gregory Poser",
+    role: "Sr. Technical Program Manager · Blue Origin",
+    photo: "/Greg%20Poser.jpg",
+    type: "Candidate",
+    quote: `Imran was far and away the best recruiter experience I've ever had. He was responsive, communicative, professional, and warm. Most importantly, Imran went to great lengths to ensure the role was a good fit and that compensation and role expectations were in-line with my desires. There was never a moment where I felt that he was pushing me into the role, it felt very collaborative. I could not recommend Imran enough for anyone requiring recruiting services.`,
   },
   {
     name: "Josh Parker",
@@ -99,7 +113,7 @@ const TESTIMONIALS = [
   {
     name: "Larry Ferguson",
     role: "Northeast Sales Executive · Mistras Group",
-    photo: "/Larry%20Ferguson.jpg",
+    photo: "/Larry%20Ferguson%20Updated.jpeg",
     type: "Candidate",
     quote: `Working with Imran has been a sincere pleasure. He was always responsive and truly listened to my needs and wants as a sales professional. Imran also had a strong understanding of the market I was looking to work in — he knew the strong companies and the ones that were not going to be a good fit for me. Would I recommend Imran, yes 100%!`,
   },
@@ -130,6 +144,7 @@ export function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [quoteExpanded, setQuoteExpanded] = useState(false);
   const [logoIndex, setLogoIndex] = useState(0);
   const [logoOffset, setLogoOffset] = useState(0);
   const [logoAnimate, setLogoAnimate] = useState(true);
@@ -215,8 +230,8 @@ export function LandingPage() {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-      if (e.key === "ArrowRight") setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length);
+      if (e.key === "ArrowLeft") { setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length); setQuoteExpanded(false); }
+      if (e.key === "ArrowRight") { setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length); setQuoteExpanded(false); }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
@@ -340,7 +355,7 @@ export function LandingPage() {
             <div className="testimonials-row">
               <button
                 className="carousel-btn"
-                onClick={() => setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)}
+                onClick={() => { setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length); setQuoteExpanded(false); }}
                 aria-label="Previous testimonial"
               >
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -348,12 +363,19 @@ export function LandingPage() {
                 </svg>
               </button>
               <div className="testimonials-outer">
-                {(() => { const t = TESTIMONIALS[testimonialIndex]; return (
+                {(() => { const t = TESTIMONIALS[testimonialIndex]; const LIMIT = 250; const isLong = t.quote.length > LIMIT; return (
                   <div className="testimonial-card" key={testimonialIndex}>
                     <div className="testimonial-card-inner">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={t.photo} alt={t.name} className="testimonial-avatar" width={88} height={88} />
-                      <p className="testimonial-quote">{t.quote}</p>
+                      <p className="testimonial-quote">
+                        {isLong && !quoteExpanded ? `${t.quote.slice(0, LIMIT).trimEnd()}…` : t.quote}
+                        {isLong && (
+                          <button className="quote-toggle" onClick={() => setQuoteExpanded(e => !e)}>
+                            {quoteExpanded ? " show less" : " read more"}
+                          </button>
+                        )}
+                      </p>
                       <div className="testimonial-attribution">
                         <div className="testimonial-name">{t.name}</div>
                         <div className="testimonial-role">{t.role}</div>
@@ -365,7 +387,7 @@ export function LandingPage() {
               </div>
               <button
                 className="carousel-btn"
-                onClick={() => setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length)}
+                onClick={() => { setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length); setQuoteExpanded(false); }}
                 aria-label="Next testimonial"
               >
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">

@@ -669,6 +669,23 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
   margin-bottom: 28px;
 }
 
+.quote-toggle {
+  background: none;
+  border: none;
+  padding: 0 0 0 2px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--warm-gray);
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+
+.quote-toggle:hover {
+  color: var(--slate);
+}
+
 .testimonial-attribution {
   display: flex;
   flex-direction: column;
