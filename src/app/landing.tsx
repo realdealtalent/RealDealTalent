@@ -152,6 +152,7 @@ export function LandingPage() {
   const logoTrackRef = useRef<HTMLDivElement>(null);
   const swipeRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     // Navbar scroll effect
@@ -242,14 +243,19 @@ export function LandingPage() {
   useEffect(() => {
     const el = swipeRef.current;
     if (!el) return;
-    const onTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+    const onTouchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    };
     const onTouchEnd = (e: TouchEvent) => {
-      if (touchStartX.current === null) return;
+      if (touchStartX.current === null || touchStartY.current === null) return;
       const dx = e.changedTouches[0].clientX - touchStartX.current;
-      if (Math.abs(dx) < 40) return;
+      const dy = e.changedTouches[0].clientY - touchStartY.current;
+      touchStartX.current = null;
+      touchStartY.current = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
       if (dx < 0) { setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length); setQuoteExpanded(false); }
       else { setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length); setQuoteExpanded(false); }
-      touchStartX.current = null;
     };
     el.addEventListener("touchstart", onTouchStart, { passive: true });
     el.addEventListener("touchend", onTouchEnd, { passive: true });

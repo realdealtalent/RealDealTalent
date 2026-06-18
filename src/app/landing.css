@@ -609,7 +609,7 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
   gap: 16px;
 }
 
-.testimonials-outer { flex: 1; min-width: 0; }
+.testimonials-outer { flex: 1; min-width: 0; touch-action: pan-y; }
 
 @keyframes testimonial-fade-in {
   from { opacity: 0; transform: translateY(10px); }
