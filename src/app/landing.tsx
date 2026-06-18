@@ -150,6 +150,8 @@ export function LandingPage() {
   const [logoAnimate, setLogoAnimate] = useState(true);
   const [logoPaused, setLogoPaused] = useState(false);
   const logoTrackRef = useRef<HTMLDivElement>(null);
+  const swipeRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     // Navbar scroll effect
@@ -237,6 +239,22 @@ export function LandingPage() {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
+  useEffect(() => {
+    const el = swipeRef.current;
+    if (!el) return;
+    const onTouchStart = (e: TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX.current;
+      if (Math.abs(dx) < 40) return;
+      if (dx < 0) { setTestimonialIndex(i => (i + 1) % TESTIMONIALS.length); setQuoteExpanded(false); }
+      else { setTestimonialIndex(i => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length); setQuoteExpanded(false); }
+      touchStartX.current = null;
+    };
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => { el.removeEventListener("touchstart", onTouchStart); el.removeEventListener("touchend", onTouchEnd); };
+  }, []);
 
   return (
     <>
@@ -362,8 +380,8 @@ export function LandingPage() {
                   <path d="M11 14l-5-5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              <div className="testimonials-outer">
-                {(() => { const t = TESTIMONIALS[testimonialIndex]; const LIMIT = 250; const isLong = t.quote.length > LIMIT; return (
+              <div className="testimonials-outer" ref={swipeRef}>
+                {(() => { const t = TESTIMONIALS[testimonialIndex]; const LIMIT = t.name === "Kurt Kalousek" ? 245 : 250; const isLong = t.quote.length > LIMIT; return (
                   <div className="testimonial-card" key={testimonialIndex}>
                     <div className="testimonial-card-inner">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
