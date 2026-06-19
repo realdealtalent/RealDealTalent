@@ -156,7 +156,7 @@ nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
 
 .hero-text h1 {
   font-family: var(--serif);
-  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 28px;
@@ -263,7 +263,7 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 
 .section-title {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
@@ -775,7 +775,7 @@ section { padding: 48px 0; scroll-margin-top: 72px; }
 
 .cta-banner h2 {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.9rem, 3.5vw, 2.75rem);
   margin-bottom: 20px;
   position: relative;
 }
@@ -877,7 +877,7 @@ footer {
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }
-  .hero-text h1 { font-size: 2.4rem; }
+  .hero-text h1 { font-size: 1.9rem; }
   .spec-grid { grid-template-columns: 1fr; }
   .placements-grid { grid-template-columns: 1fr 1fr; }
   .proof-stats { gap: 40px; }
