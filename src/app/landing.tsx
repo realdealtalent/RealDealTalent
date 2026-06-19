@@ -430,7 +430,7 @@ export function LandingPage() {
             <div className="fade-up">
               <div className="section-label">About Real Deal Talent</div>
               <h2 className="section-title">An honest headhunter who bet on himself.</h2>
-              <p className="section-subtitle">After eight years in the agency recruiting world placing talent across Wall Street, Oil &amp; Gas, Industrial Services, IIoT, and SaaS, I decided to go all in on my own. I launched Real Deal Talent in February 2025 because I saw a gap in the market for a recruiter who actually knows these industries &mdash; not just the buzzwords, but the people, the roles, and what it takes to build winning teams.</p>
+              <p className="section-subtitle">After eight years in the agency recruiting world placing talent across Wall Street, Oil &amp; Gas, Industrial Services, IIoT, and SaaS, I decided to go all in on my own. I launched Real Deal Talent because I saw a gap in the market for a recruiter who actually knows these industries &mdash; not just the buzzwords, but the people, the roles, and what it takes to build winning teams.</p>
               <p className="about-quote">Every client and candidate who&apos;s ever worked with me comes to the same conclusion &mdash; I&apos;m the best recruiter they&apos;ve ever dealt with.</p>
             </div>
             <div className="about-visual fade-up" style={{ transitionDelay: "0.1s" }}>
