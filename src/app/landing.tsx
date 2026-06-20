@@ -90,6 +90,13 @@ const TESTIMONIALS = [
     quote: `Imran is the most amazing recruiter! Not only does he do a deep dive into the industry, company, and position he's hiring for, he's also a great coach to his candidates. Thorough professional with integrity. 5 out of 5 stars!`,
   },
   {
+    name: "Trey Albin",
+    role: "Outside Sales · Rent Equip",
+    photo: "/Trey%20Albin.png",
+    type: "Candidate",
+    quote: `Working with Imran was a pleasure! The first time he cold-called me, it was for a sales role that we both decided wasn't the right fit. Most recruiters would disappear after that, but he stayed in touch, built rapport, and even met me for coffee. A few months later, he ended up placing me in my current outside sales role in Heavy Equipment. If you're in sales or operations in the Industrial Services or Heavy Equipment space, Imran should be your first call. He has more industry knowledge and contacts than any recruiter I've ever dealt with and always kept my best interests at heart throughout the entire hiring process. I wouldn't hesitate to recommend him to any candidate looking for a change or any company needing a solid headhunter.`,
+  },
+  {
     name: "Gregory Poser",
     role: "Sr. Technical Program Manager · Blue Origin",
     photo: "/Greg%20Poser.jpg",
