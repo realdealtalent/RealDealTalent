@@ -28,7 +28,7 @@ const TESTIMONIALS = [
   },
   {
     name: "Cliff Schaffer",
-    role: "SVP, Aerospace & Defense · Mistras Group",
+    role: "SVP of Aerospace & Defense · Mistras Group",
     photo: "/Cliff%20Schaffer.jpeg",
     type: "Client",
     quote: `Imran is an exceptional recruiter. We worked together on a few searches and his process yields not only exceptional candidates, but ones that we can get onboarded quickly. I was extremely impressed with his vetting process to limit the amount of "close, but not quite" candidates that were presented to the group and I for consideration. I would highly recommend Imran as a recruiting partner, and I will continue to partner with him. He's my first call when I have an opening!`,
