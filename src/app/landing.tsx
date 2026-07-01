@@ -27,6 +27,13 @@ const TESTIMONIALS = [
     quote: `Over the past three years, I've had the pleasure of working with Imran Walji and can confidently say he is one of the most authentic and effective recruiters I've encountered in my career. What sets Imran apart is that he is not focused on simply filling a position or closing a deal. He genuinely strives to create a win-win outcome for both the organization and the candidate. He takes the time to thoroughly understand the company, its culture, leadership, and objectives so he can accurately represent the opportunity and identify candidates who are truly the right fit. Imran is exceptionally detail-oriented, responsive, and well-prepared. By the time he presents a candidate, he has done his homework, vetted the individual thoroughly, and addressed the key questions and considerations upfront. This level of diligence saves valuable time and consistently leads to better outcomes. Perhaps most importantly, Imran operates with complete transparency and integrity. He has no hidden agenda, communicates openly and directly, and is committed to building long-term relationships rather than pursuing short-term transactions. His honesty, professionalism, and genuine care for both clients and candidates are refreshing in an industry where those qualities can sometimes be hard to find. If you are looking for a recruiting partner who is trustworthy, thorough, and invested in your long-term success, I highly recommend Imran. He truly lives up to the title of "The Honest Headhunter."`,
   },
   {
+    name: "Cliff Schaffer",
+    role: "SVP, Aerospace & Defense · Mistras Group",
+    photo: "/Cliff%20Schaffer.jpeg",
+    type: "Client",
+    quote: `Imran is an exceptional recruiter. We worked together on a few searches and his process yields not only exceptional candidates, but ones that we can get onboarded quickly. I was extremely impressed with his vetting process to limit the amount of "close, but not quite" candidates that were presented to the group and I for consideration. I would highly recommend Imran as a recruiting partner, and I will continue to partner with him. He's my first call when I have an opening!`,
+  },
+  {
     name: "Doug Vail",
     role: "Chief Revenue Officer · Industrial Inspection & Analysis",
     photo: "/Doug%20Vail.jpg",
