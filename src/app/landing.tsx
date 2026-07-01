@@ -34,18 +34,18 @@ const TESTIMONIALS = [
     quote: `I have had the pleasure of working with Imran on several sales professional hires. Imran brings energy and creativity to the recruitment process as he works through the candidate search process. His diligence early in the process to discover the "ideal candidate" profile has made the greatest difference for us in each hiring scenario regardless of where we are looking to hire; US or Canada roles have been filled through Im. He also preps candidates on our interests as the hiring team so the candidates showcase well, but also uses that process to see potential weaknesses that WE collectively agreed too after the interview stages. He is a valuable partner for IIA and I am confident he can help source the kind of teammate you need to grow your business.`,
   },
   {
-    name: "Shane Walsh",
-    role: "President · Rent Equip",
-    photo: "/Shane%20Walsh.jpg",
-    type: "Client",
-    quote: `Im may be the most energetic person I've ever met! His hard work, over many months, to find us the perfect candidate has been absolutely invaluable to our company and to me personally. He gets results, is outstanding at follow up and most importantly — he does every single thing he says he will do. Dependable, professional and a heck of a good guy. Will definitely give Im a call again! He is a rock star.`,
-  },
-  {
     name: "Cliff Schaffer",
     role: "SVP of Aerospace & Defense · Mistras Group",
     photo: "/Cliff%20Schaffer.jpeg",
     type: "Client",
     quote: `Imran is an exceptional recruiter. We worked together on a few searches and his process yields not only exceptional candidates, but ones that we can get onboarded quickly. I was extremely impressed with his vetting process to limit the amount of "close, but not quite" candidates that were presented to the group and I for consideration. I would highly recommend Imran as a recruiting partner, and I will continue to partner with him. He's my first call when I have an opening!`,
+  },
+  {
+    name: "Shane Walsh",
+    role: "President · Rent Equip",
+    photo: "/Shane%20Walsh.jpg",
+    type: "Client",
+    quote: `Im may be the most energetic person I've ever met! His hard work, over many months, to find us the perfect candidate has been absolutely invaluable to our company and to me personally. He gets results, is outstanding at follow up and most importantly — he does every single thing he says he will do. Dependable, professional and a heck of a good guy. Will definitely give Im a call again! He is a rock star.`,
   },
   {
     name: "Josh Sweeney",
