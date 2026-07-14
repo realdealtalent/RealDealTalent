@@ -492,24 +492,24 @@ export function LandingPage() {
           </div>
           <div className="industry-grid">
             <div className="industry-card fade-up">
-              <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-6h6v6"/></svg></div>
-              <h3>SIPA Contractors</h3>
-              <p>Scaffolding, insulation, painting, and abatement services. Companies like BrandSafway, Brock Group, and specialty access providers.</p>
-            </div>
-            <div className="industry-card fade-up" style={{ transitionDelay: "0.08s" }}>
               <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
               <h3>TICC Contractors</h3>
               <p>Testing, inspection, certification, and compliance. Working with leaders like Mistras Group, Acuren, SGS, Bureau Veritas, Intertek, and more.</p>
             </div>
-            <div className="industry-card fade-up" style={{ transitionDelay: "0.16s" }}>
+            <div className="industry-card fade-up" style={{ transitionDelay: "0.08s" }}>
               <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20M14 12h.01"/></svg></div>
               <h3>Heavy Equipment</h3>
               <p>Equipment rental, sales, and service. Earthmoving, aerial platforms, telehandlers, concrete, and general jobsite machines.</p>
             </div>
-            <div className="industry-card fade-up" style={{ transitionDelay: "0.24s" }}>
+            <div className="industry-card fade-up" style={{ transitionDelay: "0.16s" }}>
               <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M20 7h-9M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
               <h3>Master Distribution</h3>
               <p>Electrical hardware, components, power utility products. Serving wholesalers, distributors, OEMs, municipalities, and end-users.</p>
+            </div>
+            <div className="industry-card fade-up" style={{ transitionDelay: "0.24s" }}>
+              <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20M5 20V8l7-5 7 5v12M9 20v-6h6v6"/></svg></div>
+              <h3>SIPA Contractors</h3>
+              <p>Scaffolding, insulation, painting, and abatement services. Companies like BrandSafway, Brock Group, and specialty access providers.</p>
             </div>
           </div>
         </div>
@@ -571,7 +571,7 @@ export function LandingPage() {
             </div>
             <div className="footer-col">
               <h4>Industries</h4>
-              <a href="#industries">SIPA Contractors</a><a href="#industries">TICC Contractors</a><a href="#industries">Heavy Equipment</a><a href="#industries">Master Distribution</a>
+              <a href="#industries">TICC Contractors</a><a href="#industries">Heavy Equipment</a><a href="#industries">Master Distribution</a><a href="#industries">SIPA Contractors</a>
             </div>
             <div className="footer-col">
               <h4>Connect</h4>
