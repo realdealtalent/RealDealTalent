@@ -11,12 +11,12 @@ const CLIENT_LOGOS = [
   { src: "/IIA%20Logo.png",                           alt: "Industrial Inspection & Analysis", href: "https://industrial-ia.com",        cls: "" },
   { src: "/Kova%20Engineering%20Logo.png",            alt: "Kova Engineering",               href: "https://www.kova.com",              cls: "client-logo--kova", linkCls: "client-logo-link--multiply" },
   { src: "/ISS%20Logo.png",                           alt: "Industrial Specialty Services",  href: "https://isservices.com",            cls: "client-logo--tall" },
+  { src: "/Industrial%20Matrix%20Logo.svg",           alt: "Industrial Matrix",             href: "https://industrialmatrix.com",      cls: "" },
   { src: "/DarkVision%20Logo.webp",                   alt: "DarkVision",                     href: "https://darkvisiontech.com",        cls: "" },
   { src: "/PUPCO%20Logo.webp",                        alt: "PUPCO",                          href: "https://pupco.com",                 cls: "" },
   { src: "/Rent%20Equip%20Logo.svg",                  alt: "Rent Equip",                     href: "https://www.getrentequip.com",      cls: "client-logo--tall" },
   { src: "/Wilcoxon%20Sensing%20Technologies.webp",   alt: "Wilcoxon Sensing Technologies",  href: "https://wilcoxon.com",              cls: "" },
   { src: "/Ultimate%20Tool%20%26%20Safety%20Logo.png", alt: "Ultimate Tool & Safety",        href: "https://ultimatetoolandsafety.com", cls: "client-logo--lg" },
-  { src: "/Industrial%20Matrix%20Logo.svg",           alt: "Industrial Matrix",             href: "https://industrialmatrix.com",      cls: "" },
 ];
 
 const TESTIMONIALS = [
