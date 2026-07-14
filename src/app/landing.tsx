@@ -494,7 +494,7 @@ export function LandingPage() {
             <div className="industry-card fade-up">
               <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
               <h3>TICC Contractors</h3>
-              <p>Testing, inspection, certification, and compliance. Working with leaders like Mistras Group, Acuren, SGS, Bureau Veritas, Intertek, and more.</p>
+              <p>Testing, inspection, certification, and compliance. Working with leaders like Mistras Group, Industrial Inspection & Analysis, Kova Engineering, and more.</p>
             </div>
             <div className="industry-card fade-up" style={{ transitionDelay: "0.08s" }}>
               <div className="industry-icon"><svg viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20M14 12h.01"/></svg></div>
