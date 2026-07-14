@@ -16,6 +16,7 @@ const CLIENT_LOGOS = [
   { src: "/Rent%20Equip%20Logo.svg",                  alt: "Rent Equip",                     href: "https://www.getrentequip.com",      cls: "client-logo--tall" },
   { src: "/Wilcoxon%20Sensing%20Technologies.webp",   alt: "Wilcoxon Sensing Technologies",  href: "https://wilcoxon.com",              cls: "" },
   { src: "/Ultimate%20Tool%20%26%20Safety%20Logo.png", alt: "Ultimate Tool & Safety",        href: "https://ultimatetoolandsafety.com", cls: "client-logo--lg" },
+  { src: "/Industrial%20Matrix%20Logo.svg",           alt: "Industrial Matrix",             href: "https://industrialmatrix.com",      cls: "" },
 ];
 
 const TESTIMONIALS = [
