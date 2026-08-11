@@ -7,16 +7,16 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 const LOGO_SRC = "/logo.png";
 
 const CLIENT_LOGOS = [
-  { src: "/Mistras%20Logo.png",                      alt: "Mistras Group",                  href: "https://www.mistrasgroup.com",      cls: "" },
-  { src: "/IIA%20Logo.png",                           alt: "Industrial Inspection & Analysis", href: "https://industrial-ia.com",        cls: "" },
-  { src: "/Kova%20Engineering%20Logo.png",            alt: "Kova Engineering",               href: "https://www.kova.com",              cls: "client-logo--kova", linkCls: "client-logo-link--multiply" },
-  { src: "/ISS%20Logo.png",                           alt: "Industrial Specialty Services",  href: "https://isservices.com",            cls: "client-logo--tall" },
-  { src: "/Industrial%20Matrix%20Logo.svg",           alt: "Industrial Matrix",             href: "https://industrialmatrix.com",      cls: "" },
-  { src: "/DarkVision%20Logo.webp",                   alt: "DarkVision",                     href: "https://darkvisiontech.com",        cls: "" },
-  { src: "/PUPCO%20Logo.webp",                        alt: "PUPCO",                          href: "https://pupco.com",                 cls: "" },
-  { src: "/Rent%20Equip%20Logo.svg",                  alt: "Rent Equip",                     href: "https://www.getrentequip.com",      cls: "client-logo--tall" },
-  { src: "/Wilcoxon%20Sensing%20Technologies.webp",   alt: "Wilcoxon Sensing Technologies",  href: "https://wilcoxon.com",              cls: "" },
-  { src: "/Ultimate%20Tool%20%26%20Safety%20Logo.png", alt: "Ultimate Tool & Safety",        href: "https://ultimatetoolandsafety.com", cls: "client-logo--lg" },
+  { src: "/Mistras%20Logo.png",                      alt: "Mistras Group",                  cls: "" },
+  { src: "/IIA%20Logo.png",                           alt: "Industrial Inspection & Analysis", cls: "" },
+  { src: "/Kova%20Engineering%20Logo.png",            alt: "Kova Engineering",               cls: "client-logo--kova", linkCls: "client-logo-link--multiply" },
+  { src: "/ISS%20Logo.png",                           alt: "Industrial Specialty Services",  cls: "client-logo--tall" },
+  { src: "/Industrial%20Matrix%20Logo.svg",           alt: "Industrial Matrix",             cls: "" },
+  { src: "/DarkVision%20Logo.webp",                   alt: "DarkVision",                     cls: "" },
+  { src: "/PUPCO%20Logo.webp",                        alt: "PUPCO",                          cls: "" },
+  { src: "/Rent%20Equip%20Logo.svg",                  alt: "Rent Equip",                     cls: "client-logo--tall" },
+  { src: "/Wilcoxon%20Sensing%20Technologies.webp",   alt: "Wilcoxon Sensing Technologies",  cls: "" },
+  { src: "/Ultimate%20Tool%20%26%20Safety%20Logo.png", alt: "Ultimate Tool & Safety",        cls: "client-logo--lg" },
 ];
 
 const TESTIMONIALS = [
@@ -373,10 +373,10 @@ export function LandingPage() {
             >
               {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
                 <div key={i} className="logo-slide">
-                  <a href={logo.href} target="_blank" rel="noopener noreferrer" className={`client-logo-link ${logo.linkCls ?? ""}`}>
+                  <div className={`client-logo-link ${logo.linkCls ?? ""}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={logo.src} alt={logo.alt} className={`client-logo ${logo.cls}`} />
-                  </a>
+                  </div>
                 </div>
               ))}
             </div>
